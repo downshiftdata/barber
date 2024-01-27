@@ -4,6 +4,8 @@ namespace barber.Data.Repositories
     {
         System.Threading.Tasks.Task<Models.DatabaseResponse> SelectDatabaseByKey(long key);
 
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.DatabaseResponse>> SelectDatabaseHistory(long key);
+
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.ListResponse>> SelectDatabaseList();
 
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.DatabaseResponse>> SelectDatabases();
