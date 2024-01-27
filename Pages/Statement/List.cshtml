@@ -1,0 +1,49 @@
+@page
+@model barber.Pages.Statement.ListModel
+@{
+    ViewData["Title"] = "Statements";
+}
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><a asp-page="Add">Add</a></th>
+                <th>Key</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Approved</th>
+                <th>By</th>
+                <th>Type</th>
+                <th>Text</th>
+                <th>JSON</th>
+                <th>Check Database</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Statements)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="Edit" asp-route-key="@item.StatementKey">Edit</a>
+                        <a asp-page="Remove" asp-route-key="@item.StatementKey">Remove</a>
+                        <br />
+                        <a asp-page="Approve" asp-route-key="@item.StatementKey">Approve</a>
+                        <a asp-page="Execute" asp-route-key="@item.StatementKey">Execute</a>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.StatementKey)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Revision)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EditDateTime)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EditByUserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ApproveDateTime)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ApproveByUserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StatementType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StatementText)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StatementJson)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CheckDatabaseKey)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

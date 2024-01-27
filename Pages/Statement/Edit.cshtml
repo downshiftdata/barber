@@ -1,0 +1,45 @@
+@page "{key:long}"
+@model barber.Pages.Statement.EditModel
+@{
+    ViewData["Title"] = "Edit Statement";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Statement.StatementType" class="control-label"></label>
+                <select asp-for="Statement.StatementType" asp-items="Html.GetEnumSelectList<barber.Enum.StatementType>()">
+                </select>
+                <span asp-validation-for="Statement.StatementType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Statement.StatementText" class="control-label"></label>
+                <input asp-for="Statement.StatementText" class="form-control" />
+                <span asp-validation-for="Statement.StatementText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Statement.StatementJson" class="control-label"></label>
+                <input asp-for="Statement.StatementJson" class="form-control" />
+                <span asp-validation-for="Statement.StatementJson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Statement.CheckDatabaseKey" class="control-label"></label>
+                <select asp-for="Statement.CheckDatabaseKey" class="form-control" asp-items="Model.Databases"></select>
+                <span asp-validation-for="Statement.CheckDatabaseKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,56 @@
+@page "{key:long}"
+@model barber.Pages.Database.EditModel
+@{
+    ViewData["Title"] = "Edit Database";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Database.EnvironmentType" class="control-label"></label>
+                <select asp-for="Database.EnvironmentType" asp-items="Html.GetEnumSelectList<barber.Enum.EnvironmentType>()">
+                </select>
+                <span asp-validation-for="Database.EnvironmentType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Database.ServerName" class="control-label"></label>
+                <input asp-for="Database.ServerName" class="form-control" />
+                <span asp-validation-for="Database.ServerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Database.DatabaseName" class="control-label"></label>
+                <input asp-for="Database.DatabaseName" class="form-control" />
+                <span asp-validation-for="Database.DatabaseName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Database.AuthenticationType" class="control-label"></label>
+                <select asp-for="Database.AuthenticationType" asp-items="Html.GetEnumSelectList<barber.Enum.AuthenticationType>()">
+                </select>
+                <span asp-validation-for="Database.AuthenticationType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Database.UserName" class="control-label"></label>
+                <input asp-for="Database.UserName" class="form-control" />
+                <span asp-validation-for="Database.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Database.PasswordHash" class="control-label"></label>
+                <input asp-for="Database.PasswordHash" class="form-control" />
+                <span asp-validation-for="Database.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
