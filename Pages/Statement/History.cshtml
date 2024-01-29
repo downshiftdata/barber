@@ -1,14 +1,13 @@
-@page
-@model barber.Pages.Statement.ListModel
+@page "{key:long}"
+@model barber.Pages.Statement.HistoryModel
 @{
-    ViewData["Title"] = "Statements";
+    ViewData["Title"] = "Statement History";
 }
 
 <div class="text-center">
     <table class="table">
         <thead>
             <tr>
-                <th><a asp-page="Add">Add</a></th>
                 <th>Key</th>
                 <th>Revision</th>
                 <th>Edited</th>
@@ -22,18 +21,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Statements)
+            @foreach (var item in Model.Revisions)
             {
                 <tr>
-                    <td>
-                        <a asp-page="Edit" asp-route-key="@item.StatementKey">Edit</a>
-                        <a asp-page="Remove" asp-route-key="@item.StatementKey">Remove</a>
-                        <br />
-                        <a asp-page="Approve" asp-route-key="@item.StatementKey">Approve</a>
-                        <a asp-page="Execute" asp-route-key="@item.StatementKey">Execute</a>
-                        <br />
-                        <a asp-page="History" asp-route-key="@item.StatementKey">History</a>
-                    </td>
                     <td>@Html.DisplayFor(modelItem => item.StatementKey)</td>
                     <td>@Html.DisplayFor(modelItem => item.Revision)</td>
                     <td>@Html.DisplayFor(modelItem => item.EditDateTime)</td>

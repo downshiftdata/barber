@@ -10,19 +10,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Statement.StatementType" class="control-label"></label>
-                <select asp-for="Statement.StatementType" asp-items="Html.GetEnumSelectList<barber.Enum.StatementType>()">
-                </select>
-                <span asp-validation-for="Statement.StatementType" class="text-danger"></span>
+                <input asp-for="Statement.StatementType" class="form-control" readonly="readonly" />
             </div>
             <div class="form-group">
                 <label asp-for="Statement.StatementText" class="control-label"></label>
                 <input asp-for="Statement.StatementText" class="form-control" readonly="readonly" />
-                <span asp-validation-for="Statement.StatementText" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Statement.StatementJson" class="control-label"></label>
                 <input asp-for="Statement.StatementJson" class="form-control" />
-                <span asp-validation-for="Statement.StatementJson" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Approve" class="btn btn-primary" />

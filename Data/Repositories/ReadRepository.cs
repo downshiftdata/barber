@@ -36,6 +36,16 @@ namespace barber.Data.Repositories
             return result ?? throw new System.InvalidOperationException();
         }
 
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.StatementResponse>> SelectStatementHistory(long key)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateKeyParameter("StatementKey", key),
+            };
+            var result = (await base.Get<Models.StatementResponse>("Statement_SelectHistory", Models.StatementResponse.Load, p)).Results;
+            return result ?? throw new System.InvalidOperationException();
+        }
+
         public async System.Threading.Tasks.Task<Models.StatementResponse> SelectStatementByKey(long key)
         {
             var p = new System.Data.IDataParameter[]

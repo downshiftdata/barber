@@ -10,6 +10,8 @@ namespace barber.Data.Repositories
 
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.DatabaseResponse>> SelectDatabases();
 
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.StatementResponse>> SelectStatementHistory(long key);
+
         System.Threading.Tasks.Task<Models.StatementResponse> SelectStatementByKey(long key);
 
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.StatementResponse>> SelectStatements();
