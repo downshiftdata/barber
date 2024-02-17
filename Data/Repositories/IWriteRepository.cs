@@ -6,6 +6,8 @@ namespace barber.Data.Repositories
 
         System.Threading.Tasks.Task<Data.Models.WriteResult> InsertDatabase(Data.Models.DatabaseRequest request);
 
+        System.Threading.Tasks.Task<Data.Models.WriteResult> InsertExecution(Data.Models.ExecutionRequest request);
+
         System.Threading.Tasks.Task<Data.Models.WriteResult> InsertStatement(Data.Models.StatementRequest request);
 
         System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateStatement(Data.Models.StatementRequest request);

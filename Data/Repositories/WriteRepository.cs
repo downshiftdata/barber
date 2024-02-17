@@ -16,6 +16,23 @@ namespace barber.Data.Repositories
             return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
         }
 
+        public async System.Threading.Tasks.Task<Models.WriteResult> InsertExecution(Models.ExecutionRequest request)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateKeyParameterWithOutput("ExecutionKey", System.DBNull.Value),
+                base.CreateKeyParameter("DatabaseKey", request.DatabaseKey),
+                base.CreateKeyParameter("StatementKey", request.StatementKey),
+                base.CreateStringParameter("ExecuteByUserName", request.ExecuteByUserName),
+                base.CreateDateTimeParameter("ExecuteDateTime", request.ExecuteDateTime),
+                base.CreateLongParameter("ExecuteMs", request.ExecuteMs),
+                base.CreateLongParameter("RowCount", request.RowCount),
+            };
+            var result = await base.Execute("Execution_Insert", p);
+            var key = (long?)result.ParameterValues["ExecutionKey"];
+            return new Models.WriteResult(result.ReturnValue == 1, key);
+        }
+
         public async System.Threading.Tasks.Task<Models.WriteResult> InsertDatabase(Models.DatabaseRequest request)
         {
             if (request.DatabaseKey is not null) throw new System.ArgumentNullException("DatabaseKey");

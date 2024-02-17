@@ -2,6 +2,8 @@ namespace barber.Data.Repositories
 {
     public interface IReadRepository
     {
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.ListResponse>> SelectApprovedStatementList();
+
         System.Threading.Tasks.Task<Models.DatabaseResponse> SelectDatabaseByKey(long key);
 
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.DatabaseResponse>> SelectDatabaseHistory(long key);

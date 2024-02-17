@@ -4,6 +4,12 @@ namespace barber.Data.Repositories
     {
         public ReadRepository(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
 
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.ListResponse>> SelectApprovedStatementList()
+        {
+            var result = (await base.Get<Models.ListResponse>("Statement_SelectApprovedList", Models.ListResponse.Load)).Results;
+            return result ?? throw new System.InvalidOperationException();
+        }
+
         public async System.Threading.Tasks.Task<Models.DatabaseResponse> SelectDatabaseByKey(long key)
         {
             var p = new System.Data.IDataParameter[]

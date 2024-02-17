@@ -1,4 +1,5 @@
-CREATE OR ALTER PROCEDURE [barber].[Statement_Execute]
+CREATE OR ALTER PROCEDURE [barber].[Execution_Insert]
+    @ExecutionKey BIGINT OUT,
     @StatementKey BIGINT,
     @ExecuteByUserName NVARCHAR(128),
     @DatabaseKey BIGINT,
@@ -52,6 +53,7 @@ BEGIN
             GETUTCDATE(),
             @ExecuteMs,
             @RowCount;
+    SELECT @ExecutionKey = SCOPE_IDENTITY();
 
     RETURN @@ROWCOUNT;
 END;

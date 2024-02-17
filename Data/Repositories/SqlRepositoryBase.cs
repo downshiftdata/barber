@@ -51,6 +51,9 @@ namespace barber.Data.Repositories
         protected System.Data.IDataParameter CreateKeyParameterWithOutput(string name, object? value)
             => CreateParameter(name, value, System.Data.SqlDbType.BigInt, 0, 0, 0, System.Data.ParameterDirection.InputOutput);
 
+        protected System.Data.IDataParameter CreateLongParameter(string name, object? value)
+            => CreateParameter(name, value, System.Data.SqlDbType.BigInt, 0, 0, 0, System.Data.ParameterDirection.Input);
+
         protected System.Data.IDataParameter CreateStringParameter(string name, object? value)
             => CreateParameter(name, value, System.Data.SqlDbType.NVarChar, DefaultStringLength, 0, 0, System.Data.ParameterDirection.Input);
 
