@@ -29,9 +29,10 @@
                         <a asp-page="Edit" asp-route-key="@item.StatementKey">Edit</a>
                         <a asp-page="Remove" asp-route-key="@item.StatementKey">Remove</a>
                         <br />
+                        <a asp-page="Validate" asp-route-key="@item.StatementKey">Validate</a>
                         <a asp-page="Approve" asp-route-key="@item.StatementKey">Approve</a>
-                        <a asp-page="Execute" asp-route-key="@item.StatementKey">Execute</a>
                         <br />
+                        <a asp-page="Execute" asp-route-key="@item.StatementKey">Execute</a>
                         <a asp-page="History" asp-route-key="@item.StatementKey">History</a>
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.StatementKey)</td>

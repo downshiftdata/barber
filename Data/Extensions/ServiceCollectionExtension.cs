@@ -7,6 +7,7 @@ namespace barber.Data.Extensions
         public static IServiceCollection AddData(this IServiceCollection services)
         {
             services.AddSingleton<Models.ISqlContext, Models.SqlContext>();
+            services.AddSingleton<Repositories.IExecuteRepository, Repositories.ExecuteRepository>();
             services.AddSingleton<Repositories.IReadRepository, Repositories.ReadRepository>();
             services.AddSingleton<Repositories.IWriteRepository, Repositories.WriteRepository>();
             return services;

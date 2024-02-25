@@ -36,12 +36,13 @@ namespace barber.Pages
 
         public async System.Threading.Tasks.Task<IActionResult> OnPostAsync()
         {
-            if (StatementKey == null || DatabaseKey == null || !ModelState.IsValid) // || Statement == null)
+            if (StatementKey == null || DatabaseKey == null || !ModelState.IsValid)
             {
                 return Page();
             }
 
-            var executeMs = 0;
+            // TODO: Load and Verify
+            var now = System.DateTime.UtcNow;
             var rowCount = 0;
             // TODO: Actually do the work.
             var request = new Data.Models.ExecutionRequest()
@@ -49,7 +50,7 @@ namespace barber.Pages
                 StatementKey = (long)StatementKey,
                 ExecuteByUserName = "default",
                 DatabaseKey = (long)DatabaseKey,
-                ExecuteMs = executeMs,
+                ExecuteMs = (long)System.DateTime.UtcNow.Subtract(now).TotalMilliseconds,
                 RowCount = rowCount
             };
             var result = await _WriteRepository.InsertExecution(request);
