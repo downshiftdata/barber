@@ -1,0 +1,70 @@
+@page "/statement/{Key:int}/validate"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject Data.Repositories.IExecuteRepository _ExecuteRepository;
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Validate Statement</PageTitle>
+
+<a class="nav-link" href="/statement/list">Back to List</a>
+
+@if (Statement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form method="post" @onsubmit="Submit" @formname="statement-validate-form">
+        <AntiforgeryToken />
+        <div class="form-group">
+            <label class="control-label">Key</label>
+            <label class="form-control">@Statement!.StatementKey</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Type</label>
+            <label class="form-control">@Statement!.StatementType</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Text</label>
+            <label class="form-control">@Statement!.StatementText</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement JSON</label>
+            <label class="form-control">@Statement!.StatementJson</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Check Database</label>
+            <label class="form-control">@Statement!.CheckDatabaseKey</label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Validate</button>
+        </div>
+    </form>
+}
+
+@code {
+    [Parameter]
+    public int Key { get; set; }
+
+    public string Results { get; set; } = default!;
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public Data.Models.StatementRequest? Statement { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        var response = await _ReadRepository.SelectStatementByKey(Key);
+        Statement = new Data.Models.StatementRequest(response);
+    }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (Statement != null && Statement.StatementText != null)
+        {
+            var database = await _ReadRepository.SelectDatabaseByKey(Statement.CheckDatabaseKey);
+            var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, database.PasswordHash);
+            var result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
+            Results = string.Format("Success:{0},RowCount:{1},Exception:{2}", result.IsSuccessful, result.RowCount, result.Exception is null ? "(None)" : result.Exception.ToString());
+        }
+    }
+}

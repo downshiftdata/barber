@@ -1,0 +1,63 @@
+@page "/statement/{Key:int}/approve"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Data.Repositories.IWriteRepository _WriteRepository;
+
+<PageTitle>Approve Statement</PageTitle>
+
+<a class="nav-link" href="/statement/list">Back to List</a>
+
+@if (Statement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form method="post" @onsubmit="Submit" @formname="statement-approve-form">
+        <AntiforgeryToken />
+        <div class="form-group">
+            <label class="control-label">Key</label>
+            <label class="form-control">@Statement!.StatementKey</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Type</label>
+            <label class="form-control">@Statement!.StatementType</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Text</label>
+            <label class="form-control">@Statement!.StatementText</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement JSON</label>
+            <label class="form-control">@Statement!.StatementJson</label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Approve</button>
+        </div>
+    </form>
+}
+
+@code {
+    [Parameter]
+    public int Key { get; set; }
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public Data.Models.StatementRequest? Statement { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        var response = await _ReadRepository.SelectStatementByKey(Key);
+        Statement = new Data.Models.StatementRequest(response);
+    }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (Statement != null)
+        {
+            Statement.ApproveByUserName = "default";
+            var result = await _WriteRepository.ApproveStatement(Statement);
+            Navigation.NavigateTo("/statement/list");
+        }
+    }
+}

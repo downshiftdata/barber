@@ -1,0 +1,72 @@
+@page "/statement/add"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Data.Repositories.IWriteRepository _WriteRepository;
+
+<PageTitle>Add Statement</PageTitle>
+
+<a class="nav-link" href="/statement/list">Back to List</a>
+
+@if (Statement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form method="post" @onsubmit="Submit" @formname="statement-add-form">
+        <AntiforgeryToken />
+        <div class="form-group">
+            <label class="control-label">Statement Type</label>
+            <InputSelect class="form-control" @bind-Value="Statement!.StatementType">
+                @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.StatementType)))
+                {
+                    <option value="@item">@item</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Text</label>
+            <InputText class="form-control" @bind-Value="Statement!.StatementText" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement JSON</label>
+            <InputText class="form-control" @bind-Value="Statement!.StatementJson" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Check Database</label>
+            <InputSelect class="form-control" @bind-Value="Statement!.CheckDatabaseKey">
+                @foreach (var item in Databases!)
+                {
+                    <option value="@item.ItemKey">@item.ItemText</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Add</button>
+        </div>
+    </form>
+}
+
+@code {
+    public System.Collections.Generic.IEnumerable<Data.Models.ListResponse>? Databases { get; set; }
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public Data.Models.StatementRequest? Statement { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        Databases = await _ReadRepository.SelectDatabaseList();
+        Statement = new Data.Models.StatementRequest();
+    }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (Statement != null)
+        {
+            Statement.EditByUserName = "default";
+            var result = await _WriteRepository.InsertStatement(Statement);
+            Navigation.NavigateTo("/statement/list");
+        }
+    }
+}

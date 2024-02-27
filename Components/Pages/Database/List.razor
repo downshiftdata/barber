@@ -1,0 +1,62 @@
+@page "/database/list"
+@rendermode InteractiveServer
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Databases</PageTitle>
+
+<h1>Databases</h1>
+
+@if (_Databases == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="nav">
+                    <a class="nav-link" href="/database/add">Add</a>
+                </th>
+                <th>Key</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Environment</th>
+                <th>Server</th>
+                <th>Database</th>
+                <th>Authentication</th>
+                <th>User Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _Databases)
+            {
+                <tr>
+                    <td class="nav">
+                        <a class="nav-link" href="/database/@item.DatabaseKey/edit">Edit</a>
+                        <a class="nav-link" href="/database/@item.DatabaseKey/history">History</a>
+                    </td>
+                    <td>@item.DatabaseKey</td>
+                    <td>@item.Revision</td>
+                    <td>@item.EditDateTime</td>
+                    <td>@item.EditByUserName</td>
+                    <td>@item.EnvironmentType</td>
+                    <td>@item.ServerName</td>
+                    <td>@item.DatabaseName</td>
+                    <td>@item.AuthenticationType</td>
+                    <td>@item.UserName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private System.Collections.Generic.IEnumerable<Data.Models.DatabaseResponse>? _Databases;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        _Databases = await _ReadRepository.SelectDatabases();
+    }
+}

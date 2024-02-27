@@ -1,0 +1,60 @@
+@page "/database/{Key:int}/history"
+@rendermode InteractiveServer
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Database Revisions</PageTitle>
+
+<h1>Database Revisions</h1>
+
+<a class="nav-link" href="/database/list">Back to List</a>
+
+@if (_Revisions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Environment</th>
+                <th>Server</th>
+                <th>Database</th>
+                <th>Authentication</th>
+                <th>User Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _Revisions)
+            {
+                <tr>
+                    <td>@item.DatabaseKey</td>
+                    <td>@item.Revision</td>
+                    <td>@item.EditDateTime</td>
+                    <td>@item.EditByUserName</td>
+                    <td>@item.EnvironmentType</td>
+                    <td>@item.ServerName</td>
+                    <td>@item.DatabaseName</td>
+                    <td>@item.AuthenticationType</td>
+                    <td>@item.UserName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public int Key { get; set; }
+
+    private System.Collections.Generic.IEnumerable<Data.Models.DatabaseResponse>? _Revisions;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        _Revisions = await _ReadRepository.SelectDatabaseHistory(Key);
+    }
+}

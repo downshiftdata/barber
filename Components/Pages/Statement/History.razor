@@ -1,0 +1,62 @@
+@page "/statement/{Key:int}/history"
+@rendermode InteractiveServer
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Statement Revisions</PageTitle>
+
+<h1>Statement Revisions</h1>
+
+<a class="nav-link" href="/statement/list">Back to List</a>
+
+@if (_Revisions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Approved</th>
+                <th>By</th>
+                <th>Type</th>
+                <th>Text</th>
+                <th>JSON</th>
+                <th>Check Database</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _Revisions)
+            {
+                <tr>
+                    <td>@item.StatementKey</td>
+                    <td>@item.Revision</td>
+                    <td>@item.EditDateTime</td>
+                    <td>@item.EditByUserName</td>
+                    <td>@item.ApproveDateTime</td>
+                    <td>@item.ApproveByUserName</td>
+                    <td>@item.StatementType</td>
+                    <td>@item.StatementText</td>
+                    <td>@item.StatementJson</td>
+                    <td>@item.CheckDatabaseKey</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public int Key { get; set; }
+
+    private System.Collections.Generic.IEnumerable<Data.Models.StatementResponse>? _Revisions;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        _Revisions = await _ReadRepository.SelectStatementHistory(Key);
+    }
+}

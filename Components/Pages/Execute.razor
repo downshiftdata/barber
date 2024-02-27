@@ -1,0 +1,79 @@
+@page "/execute"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject Data.Repositories.IExecuteRepository _ExecuteRepository;
+@inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Data.Repositories.IWriteRepository _WriteRepository;
+
+<PageTitle>Execute</PageTitle>
+
+@if (Statement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form method="post" @onsubmit="Submit" @formname="execute-form">
+        <AntiforgeryToken />
+        <div class="form-group">
+            <label class="control-label">Key</label>
+            <label class="form-control">@Statement!.StatementKey</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Type</label>
+            <label class="form-control">@Statement!.StatementType</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement Text</label>
+            <label class="form-control">@Statement!.StatementText</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Statement JSON</label>
+            <label class="form-control">@Statement!.StatementJson</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Check Database</label>
+            <label class="form-control">@Statement!.CheckDatabaseKey</label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Validate</button>
+        </div>
+    </form>
+}
+
+@code {
+    public int DatabaseKey { get; set; }
+
+    public string Results { get; set; } = default!;
+
+    public int StatementKey { get; set; }
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public Data.Models.StatementRequest? Statement { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        var response = await _ReadRepository.SelectStatementByKey(StatementKey);
+        Statement = new Data.Models.StatementRequest(response);
+    }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (Statement != null && Statement.StatementText != null)
+        {
+            // TODO: Load and Verify
+            var now = System.DateTime.UtcNow;
+            var rowCount = 0;
+            // TODO: Actually do the work.
+            var request = new Data.Models.ExecutionRequest()
+            {
+                StatementKey = (long)StatementKey,
+                ExecuteByUserName = "default",
+                DatabaseKey = (long)DatabaseKey,
+                ExecuteMs = (long)System.DateTime.UtcNow.Subtract(now).TotalMilliseconds,
+                RowCount = rowCount
+            };
+            var result = await _WriteRepository.InsertExecution(request);
+        }
+    }
+}

@@ -1,0 +1,68 @@
+@page "/statement/list"
+@rendermode InteractiveServer
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Statements</PageTitle>
+
+<h1>Statements</h1>
+
+@if (_Statements == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="nav">
+                    <a class="nav-link" href="/statement/add">Add</a>
+                </th>
+                <th>Key</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Approved</th>
+                <th>By</th>
+                <th>Type</th>
+                <th>Text</th>
+                <th>JSON</th>
+                <th>Check Database</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _Statements)
+            {
+                <tr>
+                    <td class="nav flex-sm-column">
+                        <a class="nav-link" href="/statement/@item.StatementKey/edit">Edit</a>
+                        <a class="nav-link" href="/statement/@item.StatementKey/remove">Remove</a>
+                        <a class="nav-link" href="/statement/@item.StatementKey/validate">Validate</a>
+                        <a class="nav-link" href="/statement/@item.StatementKey/approve">Approve</a>
+                        <a class="nav-link" href="/execute">Execute</a>
+                        <a class="nav-link" href="/statement/@item.StatementKey/history">History</a>
+                    </td>
+                    <td>@item.StatementKey</td>
+                    <td>@item.Revision</td>
+                    <td>@item.EditDateTime</td>
+                    <td>@item.EditByUserName</td>
+                    <td>@item.ApproveDateTime</td>
+                    <td>@item.ApproveByUserName</td>
+                    <td>@item.StatementType</td>
+                    <td>@item.StatementText</td>
+                    <td>@item.StatementJson</td>
+                    <td>@item.CheckDatabaseKey</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private System.Collections.Generic.IEnumerable<Data.Models.StatementResponse>? _Statements;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        _Statements = await _ReadRepository.SelectStatements();
+    }
+}
