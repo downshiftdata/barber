@@ -27,7 +27,7 @@ namespace barber.Data.Repositories
             }
         }
 
-        private Models.ISqlResult<Models.NoResponseModel> ExecuteAdHoc(string statement, bool parseOnly, Models.ConnectionOptions options)
+        private static Models.SqlResult<Models.NoResponseModel> ExecuteAdHoc(string statement, bool parseOnly, Models.ConnectionOptions options)
         {
             var rowCount = 0;
             using (var connection = new Microsoft.Data.SqlClient.SqlConnection(GetConnectionString(options)))
@@ -45,7 +45,7 @@ namespace barber.Data.Repositories
             return new Models.SqlResult<Models.NoResponseModel>(rowCount, null, null, null);
         }
 
-        private string GetConnectionString(Models.ConnectionOptions options)
+        private static string GetConnectionString(Models.ConnectionOptions options)
         {
             var authX = (options.UserName is null || options.Password is null)
                 ? AuthXIntegrated

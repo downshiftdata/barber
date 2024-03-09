@@ -42,11 +42,23 @@ else
     </form>
 }
 
+@if (Result != null)
+{
+    @if (Result.IsSuccessful)
+    {
+        <div class="alert alert-success">No Errors Detected</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">Error: @Result.Exception?.Message</div>
+    }
+}
+
 @code {
     [Parameter]
     public int Key { get; set; }
 
-    public string Results { get; set; } = default!;
+    public Data.Models.ExecuteResult? Result { get; set; }
 
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
     public Data.Models.StatementRequest? Statement { get; set; }
@@ -63,8 +75,7 @@ else
         {
             var database = await _ReadRepository.SelectDatabaseByKey(Statement.CheckDatabaseKey);
             var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, database.PasswordHash);
-            var result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
-            Results = string.Format("Success:{0},RowCount:{1},Exception:{2}", result.IsSuccessful, result.RowCount, result.Exception is null ? "(None)" : result.Exception.ToString());
+            Result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
         }
     }
 }
