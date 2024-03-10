@@ -11,6 +11,7 @@ BEGIN
         [AuthenticationType] INT NOT NULL,
         [UserName] NVARCHAR(128) NULL,
         [PasswordHash] NVARCHAR(128) NULL,
+        [Description] NVARCHAR(128) NULL,
         CONSTRAINT [pk_barber_Database] PRIMARY KEY ([DatabaseKey]))
         WITH (DATA_COMPRESSION = NONE);
 END;

@@ -14,7 +14,8 @@ BEGIN
             [DatabaseName],
             [AuthenticationType],
             [UserName],
-            [PasswordHash]
+            [PasswordHash],
+            [Description]
         FROM [barber].[Database]
         WHERE [DatabaseKey] = @DatabaseKey
     UNION ALL
@@ -28,7 +29,8 @@ BEGIN
             [DatabaseName],
             [AuthenticationType],
             [UserName],
-            [PasswordHash]
+            [PasswordHash],
+            [Description]
         FROM [barber].[DatabaseHistory]
         WHERE [DatabaseKey] = @DatabaseKey
     ORDER BY [Revision];

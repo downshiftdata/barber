@@ -55,6 +55,10 @@ else
             <InputText class="form-control" @bind-Value="Database!.PasswordHash" />
         </div>
         <div class="form-group">
+            <label class="control-label">Description</label>
+            <InputText class="form-control" @bind-Value="Database!.Description" />
+        </div>
+        <div class="form-group">
             <button class="btn btn-primary" type="submit">Edit</button>
         </div>
     </form>

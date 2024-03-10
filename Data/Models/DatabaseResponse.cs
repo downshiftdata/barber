@@ -21,6 +21,7 @@ namespace barber.Data.Models
             AuthenticationType = (Enum.AuthenticationType)values[7];
             UserName = values[8].DbNullToString();
             PasswordHash = values[9].DbNullToString();
+            Description = values[10].DbNullToString();
         }
 
         public Enum.AuthenticationType AuthenticationType { get; }
@@ -28,6 +29,8 @@ namespace barber.Data.Models
         public long? DatabaseKey { get; }
 
         public string DatabaseName { get; }
+
+        public string? Description { get; }
 
         public string EditByUserName { get; }
 

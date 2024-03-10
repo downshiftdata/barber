@@ -46,6 +46,7 @@ namespace barber.Data.Repositories
                 base.CreateEnumParameter("AuthenticationType", request.AuthenticationType),
                 base.CreateStringParameter("UserName", request.UserName),
                 base.CreateStringParameter("PasswordHash", request.PasswordHash),
+                base.CreateStringParameter("Description", request.Description)
             };
             var result = await base.Execute("Database_Insert", p);
             var key = (long?)result.ParameterValues["DatabaseKey"];
@@ -82,6 +83,7 @@ namespace barber.Data.Repositories
                 base.CreateEnumParameter("AuthenticationType", request.AuthenticationType),
                 base.CreateStringParameter("UserName", request.UserName),
                 base.CreateStringParameter("PasswordHash", request.PasswordHash),
+                base.CreateStringParameter("Description", request.Description)
             };
             var result = await base.Execute("Database_Update", p);
             return new Models.WriteResult(result.ReturnValue == 1, request.DatabaseKey);

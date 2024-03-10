@@ -13,7 +13,8 @@ BEGIN
             [DatabaseName],
             [AuthenticationType],
             [UserName],
-            [PasswordHash]
+            [PasswordHash],
+            [Description]
         FROM [barber].[Database]
         ORDER BY [DatabaseKey];
 

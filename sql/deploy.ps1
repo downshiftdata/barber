@@ -43,6 +43,8 @@ DeployFolder $rootPath "table" ;
 
 DeployFolder $rootPath "data";
 
+DeployFolder $rootPath "function";
+
 DeployFolder $rootPath "procedure" 
 
 If ($Environment -in "dev", "test")

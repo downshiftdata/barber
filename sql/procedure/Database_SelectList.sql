@@ -5,7 +5,7 @@ BEGIN
 
     SELECT
             d.[DatabaseKey] AS [ItemKey],
-            N'[' + et.[EnvironmentTypeName] + N'] ' + d.[ServerName] + N' - ' + d.[DatabaseName] AS [ItemText]
+            [barber].[GetDatabaseText](d.[DatabaseKey]) AS [ItemText]
         FROM [barber].[Database] AS d
             INNER JOIN [barber].[EnvironmentType] AS et
                 ON d.[EnvironmentType] = et.[EnvironmentTypeKey]

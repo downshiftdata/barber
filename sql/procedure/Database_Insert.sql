@@ -6,7 +6,8 @@ CREATE OR ALTER PROCEDURE [barber].[Database_Insert]
     @DatabaseName NVARCHAR(128),
     @AuthenticationType INT,
     @UserName NVARCHAR(128),
-    @PasswordHash NVARCHAR(128)
+    @PasswordHash NVARCHAR(128),
+    @Description NVARCHAR(128)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -38,7 +39,8 @@ BEGIN
             [DatabaseName],
             [AuthenticationType],
             [UserName],
-            [PasswordHash])
+            [PasswordHash],
+            [Description])
         SELECT
             1,
             @EditByUserName,
@@ -48,7 +50,8 @@ BEGIN
             @DatabaseName,
             @AuthenticationType,
             @UserName,
-            @PasswordHash;
+            @PasswordHash,
+            @Description;
     SELECT @DatabaseKey = SCOPE_IDENTITY();
 
     RETURN @@ROWCOUNT;

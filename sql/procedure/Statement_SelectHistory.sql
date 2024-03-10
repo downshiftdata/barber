@@ -5,32 +5,34 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-            [StatementKey],
-            [Revision],
-            [EditByUserName],
-            [EditDateTime],
-            [ApproveByUserName],
-            [ApproveDateTime],
-            [StatementType],
-            [StatementText],
-            [StatementJson],
-            [CheckDatabaseKey]
-        FROM [barber].[Statement]
-        WHERE [StatementKey] = @StatementKey
+            s.[StatementKey],
+            s.[Revision],
+            s.[EditByUserName],
+            s.[EditDateTime],
+            s.[ApproveByUserName],
+            s.[ApproveDateTime],
+            s.[StatementType],
+            s.[StatementText],
+            s.[StatementJson],
+            s.[CheckDatabaseKey],
+            [barber].[GetDatabaseText](s.[CheckDatabaseKey]) AS [CheckDatabaseText]
+        FROM [barber].[Statement] AS s
+        WHERE s.[StatementKey] = @StatementKey
     UNION ALL
     SELECT
-            [StatementKey],
-            [Revision],
-            [EditByUserName],
-            [EditDateTime],
-            [ApproveByUserName],
-            [ApproveDateTime],
-            [StatementType],
-            [StatementText],
-            [StatementJson],
-            [CheckDatabaseKey]
-        FROM [barber].[StatementHistory]
-        WHERE [StatementKey] = @StatementKey
+            sh.[StatementKey],
+            sh.[Revision],
+            sh.[EditByUserName],
+            sh.[EditDateTime],
+            sh.[ApproveByUserName],
+            sh.[ApproveDateTime],
+            sh.[StatementType],
+            sh.[StatementText],
+            sh.[StatementJson],
+            sh.[CheckDatabaseKey],
+            [barber].[GetDatabaseText](sh.[CheckDatabaseKey]) AS [CheckDatabaseText]
+        FROM [barber].[StatementHistory] AS sh
+        WHERE sh.[StatementKey] = @StatementKey
     ORDER BY [Revision];
 
     RETURN @@ROWCOUNT;

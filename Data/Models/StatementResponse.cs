@@ -21,6 +21,7 @@ namespace barber.Data.Models
             StatementText = values[7].DbNullToString();
             StatementJson = values[8].DbNullToString();
             CheckDatabaseKey = (long)values[9];
+            CheckDatabaseText = (string?)values[10];
         }
 
         public string? ApproveByUserName { get; }
@@ -28,6 +29,8 @@ namespace barber.Data.Models
         public System.DateTime? ApproveDateTime { get; }
 
         public long CheckDatabaseKey { get; }
+
+        public string? CheckDatabaseText { get; }
 
         public string EditByUserName { get; }
 

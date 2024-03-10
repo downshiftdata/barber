@@ -13,6 +13,7 @@ namespace barber.Data.Models
             AuthenticationType = response.AuthenticationType;
             UserName = response.UserName;
             PasswordHash = response.PasswordHash;
+            Description = response.Description;
         }
 
         public Enum.AuthenticationType AuthenticationType { get; set; } = Enum.AuthenticationType.None;
@@ -20,6 +21,8 @@ namespace barber.Data.Models
         public long? DatabaseKey { get; set; }
 
         public string DatabaseName { get; set; } = string.Empty;
+
+        public string? Description { get; set; }
 
         public string EditByUserName { get; set; } = string.Empty;
 

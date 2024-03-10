@@ -34,7 +34,7 @@ else
         </div>
         <div class="form-group">
             <label class="control-label">Check Database</label>
-            <label class="form-control">@Statement!.CheckDatabaseKey</label>
+            <label class="form-control">@Statement!.CheckDatabaseText</label>
         </div>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Validate</button>
@@ -61,12 +61,11 @@ else
     public Data.Models.ExecuteResult? Result { get; set; }
 
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
-    public Data.Models.StatementRequest? Statement { get; set; }
+    public Data.Models.StatementResponse? Statement { get; set; }
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        var response = await _ReadRepository.SelectStatementByKey(Key);
-        Statement = new Data.Models.StatementRequest(response);
+        Statement = await _ReadRepository.SelectStatementByKey(Key);
     }
 
     private async System.Threading.Tasks.Task Submit()

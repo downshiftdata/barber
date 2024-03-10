@@ -6,7 +6,8 @@ CREATE OR ALTER PROCEDURE [barber].[Database_Update]
     @DatabaseName NVARCHAR(128),
     @AuthenticationType INT,
     @UserName NVARCHAR(128),
-    @PasswordHash NVARCHAR(128)
+    @PasswordHash NVARCHAR(128),
+    @Description NVARCHAR(128)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -45,7 +46,8 @@ BEGIN
             [DatabaseName] = @DatabaseName,
             [AuthenticationType] = @AuthenticationType,
             [UserName] = @UserName,
-            [PasswordHash] = @PasswordHash
+            [PasswordHash] = @PasswordHash,
+            [Description] = @Description
         OUTPUT
                 deleted.[DatabaseKey],
                 deleted.[Revision],
@@ -56,7 +58,8 @@ BEGIN
                 deleted.[DatabaseName],
                 deleted.[AuthenticationType],
                 deleted.[UserName],
-                deleted.[PasswordHash]
+                deleted.[PasswordHash],
+                deleted.[Description]
             INTO [barber].[DatabaseHistory] (
                 [DatabaseKey],
                 [Revision],
@@ -67,7 +70,8 @@ BEGIN
                 [DatabaseName],
                 [AuthenticationType],
                 [UserName],
-                [PasswordHash])
+                [PasswordHash],
+                [Description])
         WHERE [DatabaseKey] = @DatabaseKey;
 
     RETURN @@ROWCOUNT;

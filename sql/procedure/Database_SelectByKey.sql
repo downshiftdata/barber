@@ -14,7 +14,8 @@ BEGIN
             [DatabaseName],
             [AuthenticationType],
             [UserName],
-            [PasswordHash]
+            [PasswordHash],
+            [Description]
         FROM [barber].[Database]
         WHERE [DatabaseKey] = @DatabaseKey;
 
