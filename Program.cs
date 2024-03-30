@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using barber.Components;
 using barber.Data.Extensions;
+using barber.Security.Extensions;
 
 namespace barber
 {
@@ -16,6 +17,7 @@ namespace barber
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddData();
+            builder.Services.AddSecurity();
 
             var app = builder.Build();
 

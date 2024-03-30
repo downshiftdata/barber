@@ -3,6 +3,7 @@
 @inject NavigationManager Navigation
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
+@inject Security.Services.ISecurityService _SecurityService;
 
 <PageTitle>Add Database</PageTitle>
 
@@ -48,7 +49,7 @@ else
         </div>
         <div class="form-group">
             <label class="control-label">Password</label>
-            <InputText class="form-control" @bind-Value="Database!.PasswordHash" />
+            <InputText class="form-control" type="password" @bind-Value="Password" />
         </div>
         <div class="form-group">
             <label class="control-label">Description</label>
@@ -64,6 +65,9 @@ else
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
     public Data.Models.DatabaseRequest? Database { get; set; }
 
+    [Parameter]
+    public string? Password { get; set; }
+
     protected override void OnInitialized()
     {
         Database = new Data.Models.DatabaseRequest();
@@ -73,6 +77,10 @@ else
     {
         if (Database != null)
         {
+            if (!string.IsNullOrEmpty(Password))
+            {
+                Database.PasswordHash = _SecurityService.Encrypt(Password);
+            }
             Database.EditByUserName = "default";
             var result = await _WriteRepository.InsertDatabase(Database);
             Navigation.NavigateTo("/database/list");
