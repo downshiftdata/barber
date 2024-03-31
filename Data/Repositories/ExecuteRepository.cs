@@ -14,6 +14,19 @@ namespace barber.Data.Repositories
 
         public ExecuteRepository() { }
 
+        public Models.ExecuteResult ExecuteStatement(string statementText, Models.ConnectionOptions options)
+        {
+            try
+            {
+                var result = ExecuteAdHoc(statementText, false, options);
+                return new Models.ExecuteResult(true, result.ReturnValue, null);
+            }
+            catch (System.Exception ex)
+            {
+                return new Models.ExecuteResult(false, 0, ex);
+            }
+        }
+
         public Models.ExecuteResult ValidateStatement(string statementText, Models.ConnectionOptions options)
         {
             try

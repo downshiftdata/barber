@@ -7,7 +7,7 @@ namespace barber.Data.Extensions
             if (command == null) throw new System.ArgumentNullException(nameof(command));
             if (command is Microsoft.Data.SqlClient.SqlCommand asCommand)
             {
-                await asCommand.ExecuteNonQueryAsync();
+                _ = await asCommand.ExecuteNonQueryAsync();
             }
             else
             {

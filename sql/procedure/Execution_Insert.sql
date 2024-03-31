@@ -2,6 +2,7 @@ CREATE OR ALTER PROCEDURE [barber].[Execution_Insert]
     @ExecutionKey BIGINT OUT,
     @StatementKey BIGINT,
     @ExecuteByUserName NVARCHAR(128),
+    @ExecuteDateTime DATETIME,
     @DatabaseKey BIGINT,
     @ExecuteMs BIGINT,
     @RowCount BIGINT
@@ -50,7 +51,7 @@ BEGIN
             @StatementKey,
             @statementRevision,
             @ExecuteByUserName,
-            GETUTCDATE(),
+            ISNULL(@ExecuteDateTime, GETUTCDATE()),
             @ExecuteMs,
             @RowCount;
     SELECT @ExecutionKey = SCOPE_IDENTITY();

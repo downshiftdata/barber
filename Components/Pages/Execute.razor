@@ -3,11 +3,12 @@
 @inject NavigationManager Navigation
 @inject Data.Repositories.IExecuteRepository _ExecuteRepository;
 @inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Security.Services.ISecurityService _SecurityService;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
 
 <PageTitle>Execute</PageTitle>
 
-@if (Statement == null)
+@if (Execution == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,64 +17,73 @@ else
     <form method="post" @onsubmit="Submit" @formname="execute-form">
         <AntiforgeryToken />
         <div class="form-group">
-            <label class="control-label">Key</label>
-            <label class="form-control">@Statement!.StatementKey</label>
+            <label class="control-label">Statement</label>
+            <InputSelect class="form-control" @bind-Value="Execution!.StatementKey">
+                @foreach (var item in Statements!)
+                {
+                    <option value="@item.ItemKey">@item.ItemText</option>
+                }
+            </InputSelect>
         </div>
         <div class="form-group">
-            <label class="control-label">Statement Type</label>
-            <label class="form-control">@Statement!.StatementType</label>
+            <label class="control-label">Database</label>
+            <InputSelect class="form-control" @bind-Value="Execution!.DatabaseKey">
+                @foreach (var item in Databases!)
+                {
+                    <option value="@item.ItemKey">@item.ItemText</option>
+                }
+            </InputSelect>
         </div>
         <div class="form-group">
-            <label class="control-label">Statement Text</label>
-            <label class="form-control">@Statement!.StatementText</label>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Statement JSON</label>
-            <label class="form-control">@Statement!.StatementJson</label>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Check Database</label>
-            <label class="form-control">@Statement!.CheckDatabaseKey</label>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Validate</button>
+            <button class="btn btn-primary" type="submit">Execute</button>
         </div>
     </form>
 }
 
+@if (Result != null)
+{
+    @if (Result.IsSuccessful)
+    {
+        <div class="alert alert-success">Success: @Result.RowCount row(s) affected.</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">Error: @Result.Exception?.Message</div>
+    }
+}
+
 @code {
-    public int DatabaseKey { get; set; }
-
-    public string Results { get; set; } = default!;
-
-    public int StatementKey { get; set; }
+    public System.Collections.Generic.IEnumerable<Data.Models.ListResponse>? Databases { get; set; }
 
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
-    public Data.Models.StatementRequest? Statement { get; set; }
+    public Data.Models.ExecutionRequest? Execution { get; set; }
+
+    public Data.Models.ExecuteResult? Result { get; set; }
+
+    public System.Collections.Generic.IEnumerable<Data.Models.ListResponse>? Statements { get; set; }
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        var response = await _ReadRepository.SelectStatementByKey(StatementKey);
-        Statement = new Data.Models.StatementRequest(response);
+        Databases = await _ReadRepository.SelectDatabaseList();
+        Statements = await _ReadRepository.SelectApprovedStatementList();
+        Execution = new Data.Models.ExecutionRequest();
     }
 
     private async System.Threading.Tasks.Task Submit()
     {
-        if (Statement != null && Statement.StatementText != null)
+        if (Execution != null)
         {
-            // TODO: Load and Verify
-            var now = System.DateTime.UtcNow;
-            var rowCount = 0;
-            // TODO: Actually do the work.
-            var request = new Data.Models.ExecutionRequest()
-            {
-                StatementKey = (long)StatementKey,
-                ExecuteByUserName = "default",
-                DatabaseKey = (long)DatabaseKey,
-                ExecuteMs = (long)System.DateTime.UtcNow.Subtract(now).TotalMilliseconds,
-                RowCount = rowCount
-            };
-            var result = await _WriteRepository.InsertExecution(request);
+            var statement = await _ReadRepository.SelectStatementByKey(Execution.StatementKey);
+            var database = await _ReadRepository.SelectDatabaseByKey(Execution.DatabaseKey);
+            if (statement.StatementText is null) throw new System.ArgumentNullException("StatementText");
+            Execution.ExecuteByUserName = "default";
+            Execution.ExecuteDateTime = System.DateTime.UtcNow;
+            var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _SecurityService.Decrypt(database.PasswordHash);
+            var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
+            Result = _ExecuteRepository.ExecuteStatement(statement.StatementText, options);
+            Execution.ExecuteMs = (long)System.DateTime.UtcNow.Subtract(Execution.ExecuteDateTime).TotalMilliseconds;
+            Execution.RowCount = Result.RowCount;
+            var writeResult = await _WriteRepository.InsertExecution(Execution);
         }
     }
 }
