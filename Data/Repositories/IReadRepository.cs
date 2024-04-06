@@ -18,5 +18,13 @@ namespace barber.Data.Repositories
 
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.StatementResponse>> SelectStatements();
 
+        System.Threading.Tasks.Task<Models.UserResponse> SelectUserByCredentials(string userName, string passwordHash);
+
+        System.Threading.Tasks.Task<Models.UserResponse> SelectUserByName(string userName);
+
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.UserResponse>> SelectUserHistory(string userName);
+
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.UserResponse>> SelectUsers();
+
     }
 }

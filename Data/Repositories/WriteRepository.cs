@@ -70,6 +70,22 @@ namespace barber.Data.Repositories
             return new Models.WriteResult(result.ReturnValue == 1, key);
         }
 
+        public async System.Threading.Tasks.Task<Models.WriteResult> InsertUser(Models.UserRequest request)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateStringParameter("UserName", request.UserName),
+                base.CreateStringParameter("EditByUserName", request.EditByUserName),
+                base.CreateStringParameter("PasswordHash", request.PasswordHash),
+                base.CreateBoolParameter("IsAdmin", request.IsAdmin),
+                base.CreateBoolParameter("IsEditor", request.IsEditor),
+                base.CreateBoolParameter("IsApprover", request.IsApprover),
+                base.CreateBoolParameter("IsExecutor", request.IsExecutor)
+            };
+            var result = await base.Execute("User_Insert", p);
+            return new Models.WriteResult(result.ReturnValue == 1, null);
+        }
+
         public async System.Threading.Tasks.Task<Models.WriteResult> UpdateDatabase(Models.DatabaseRequest request)
         {
             if (request.DatabaseKey is null) throw new System.ArgumentNullException("DatabaseKey");
@@ -103,6 +119,22 @@ namespace barber.Data.Repositories
             };
             var result = await base.Execute("Statement_Update", p);
             return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
+        }
+
+        public async System.Threading.Tasks.Task<Models.WriteResult> UpdateUser(Models.UserRequest request)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateStringParameter("UserName", request.UserName),
+                base.CreateStringParameter("EditByUserName", request.EditByUserName),
+                base.CreateStringParameter("PasswordHash", request.PasswordHash),
+                base.CreateBoolParameter("IsAdmin", request.IsAdmin),
+                base.CreateBoolParameter("IsEditor", request.IsEditor),
+                base.CreateBoolParameter("IsApprover", request.IsApprover),
+                base.CreateBoolParameter("IsExecutor", request.IsExecutor)
+            };
+            var result = await base.Execute("User_Update", p);
+            return new Models.WriteResult(result.ReturnValue == 1, null);
         }
     }
 }

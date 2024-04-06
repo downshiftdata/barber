@@ -19,10 +19,10 @@ BEGIN
             1,
             N'default',
             GETUTCDATE(),
-            N'password',
+            N'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
             1,
-            1,
-            1,
-            1;
+            0,
+            0,
+            0;
 END;
 GO

@@ -5,7 +5,9 @@ namespace barber.Security.Services
 {
     public class SecurityService : ISecurityService
     {
-        public const string SettingsSectionName = "Security";
+        public const string PasswordHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+
+        private const string SettingsSectionName = "Security";
 
         private readonly Models.SecuritySettings _Settings;
 
@@ -67,6 +69,18 @@ namespace barber.Security.Services
                         return System.Text.Encoding.ASCII.GetString(memoryStream.ToArray());
                     }
                 }
+            }
+        }
+
+        public string OneWayEncrypt(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) throw new System.ArgumentNullException(nameof(value));
+
+            using (_ssc.SHA256 sha = _ssc.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.ASCII.GetBytes(value);
+                var result = sha.ComputeHash(bytes);
+                return System.Text.Encoding.ASCII.GetString(result);
             }
         }
     }

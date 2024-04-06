@@ -10,8 +10,12 @@ namespace barber.Data.Repositories
 
         System.Threading.Tasks.Task<Data.Models.WriteResult> InsertStatement(Data.Models.StatementRequest request);
 
-        System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateStatement(Data.Models.StatementRequest request);
+        System.Threading.Tasks.Task<Data.Models.WriteResult> InsertUser(Data.Models.UserRequest request);
 
         System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateDatabase(Data.Models.DatabaseRequest request);
+
+        System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateStatement(Data.Models.StatementRequest request);
+
+        System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateUser(Data.Models.UserRequest request);
     }
 }

@@ -1,0 +1,60 @@
+@page "/user/list"
+@rendermode InteractiveServer
+@inject Data.Repositories.IReadRepository _ReadRepository;
+
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+@if (_Users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="nav">
+                    <a class="nav-link" href="/user/add">Add</a>
+                </th>
+                <th>Name</th>
+                <th>Revision</th>
+                <th>Edited</th>
+                <th>By</th>
+                <th>Admin</th>
+                <th>Editor</th>
+                <th>Approver</th>
+                <th>Executor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _Users)
+            {
+                <tr>
+                    <td class="nav">
+                        <a class="nav-link" href="/user/@item.UserName/edit">Edit</a>
+                        <a class="nav-link" href="/user/@item.UserName/history">History</a>
+                    </td>
+                    <td>@item.UserName</td>
+                    <td>@item.Revision</td>
+                    <td>@item.EditDateTime</td>
+                    <td>@item.EditByUserName</td>
+                    <td>@item.IsAdmin</td>
+                    <td>@item.IsEditor</td>
+                    <td>@item.IsApprover</td>
+                    <td>@item.IsExecutor</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private System.Collections.Generic.IEnumerable<Data.Models.UserResponse>? _Users;
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        _Users = await _ReadRepository.SelectUsers();
+    }
+}

@@ -67,5 +67,42 @@ namespace barber.Data.Repositories
             var result = (await base.Get<Models.StatementResponse>("Statement_Select", Models.StatementResponse.Load)).Results;
             return result ?? throw new System.InvalidOperationException();
         }
+
+        public async System.Threading.Tasks.Task<Models.UserResponse> SelectUserByCredentials(string userName, string passwordHash)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateStringParameter("UserName", userName),
+                base.CreateStringParameter("PasswordHash", passwordHash)
+            };
+            var result = (await base.GetSingle<Models.UserResponse>("User_SelectByCredentials", Models.UserResponse.Load, p)).SingleResult;
+            return result ?? throw new System.InvalidOperationException();
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.UserResponse>> SelectUserHistory(string userName)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateStringParameter("UserName", userName),
+            };
+            var result = (await base.Get<Models.UserResponse>("User_SelectHistory", Models.UserResponse.Load, p)).Results;
+            return result ?? throw new System.InvalidOperationException();
+        }
+
+        public async System.Threading.Tasks.Task<Models.UserResponse> SelectUserByName(string userName)
+        {
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateStringParameter("UserName", userName)
+            };
+            var result = (await base.GetSingle<Models.UserResponse>("User_SelectByName", Models.UserResponse.Load, p)).SingleResult;
+            return result ?? throw new System.InvalidOperationException();
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.UserResponse>> SelectUsers()
+        {
+            var result = (await base.Get<Models.UserResponse>("User_Select", Models.UserResponse.Load)).Results;
+            return result ?? throw new System.InvalidOperationException();
+        }
     }
 }

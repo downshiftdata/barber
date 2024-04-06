@@ -1,0 +1,79 @@
+@page "/user/{UserName}/edit"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Data.Repositories.IWriteRepository _WriteRepository;
+@inject Security.Services.ISecurityService _SecurityService;
+
+<PageTitle>Edit User</PageTitle>
+
+<a class="nav-link" href="/user/list">Back to List</a>
+
+@if (User == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form method="post" @onsubmit="Submit" @formname="user-edit-form">
+        <AntiforgeryToken />
+        <div class="form-group">
+            <label class="control-label">User Name</label>
+            <InputText class="form-control" @bind-Value="User!.UserName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Password</label>
+            <InputText class="form-control" type="password" @bind-Value="Password" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Admin</label>
+            <InputCheckbox class="form-control" @bind-Value="User!.IsAdmin" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Editor</label>
+            <InputCheckbox class="form-control" @bind-Value="User!.IsEditor" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Approver</label>
+            <InputCheckbox class="form-control" @bind-Value="User!.IsApprover" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Executor</label>
+            <InputCheckbox class="form-control" @bind-Value="User!.IsExecutor" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </div>
+    </form>
+}
+
+@code {
+    [Parameter]
+    public string UserName { get; set; } = string.Empty;
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public Data.Models.UserRequest? User { get; set; }
+
+    [Parameter]
+    public string? Password { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        var response = await _ReadRepository.SelectUserByName(UserName);
+        User = new Data.Models.UserRequest(response);
+    }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (User != null)
+        {
+            if (!string.IsNullOrEmpty(Password))
+            {
+                User.PasswordHash = _SecurityService.OneWayEncrypt(Password);
+            }
+            User.EditByUserName = "default";
+            var result = await _WriteRepository.UpdateUser(User);
+            Navigation.NavigateTo("/user/list");
+        }
+    }
+}
