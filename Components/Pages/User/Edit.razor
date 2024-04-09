@@ -17,33 +17,40 @@ else
 {
     <form method="post" @onsubmit="Submit" @formname="user-edit-form">
         <AntiforgeryToken />
-        <div class="form-group">
-            <label class="control-label">User Name</label>
-            <InputText class="form-control" @bind-Value="User!.UserName" />
+        <div class="form-group row mb-3">
+            <label class="col-sm-2 control-label">User Name</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="User!.UserName" />
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label">Password</label>
-            <InputText class="form-control" type="password" @bind-Value="Password" />
+        <div class="form-group row mb-3">
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" type="password" @bind-Value="Password" />
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label">Admin</label>
-            <InputCheckbox class="form-control" @bind-Value="User!.IsAdmin" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Editor</label>
-            <InputCheckbox class="form-control" @bind-Value="User!.IsEditor" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Approver</label>
-            <InputCheckbox class="form-control" @bind-Value="User!.IsApprover" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Executor</label>
-            <InputCheckbox class="form-control" @bind-Value="User!.IsExecutor" />
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Edit</button>
-        </div>
+        <fieldset class="row mb-3">
+            <legend class="col-form-label col-sm-2 pt-0">Permissions</legend>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="User!.IsAdmin" />
+                    <label class="form-check-label">Admin</label>
+                </div>
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="User!.IsEditor" />
+                    <label class="form-check-label">Editor</label>
+                </div>
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="User!.IsApprover" />
+                    <label class="form-check-label">Approver</label>
+                </div>
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="User!.IsExecutor" />
+                    <label class="form-check-label">Executor</label>
+                </div>
+            </div>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Edit</button>
     </form>
 }
 
