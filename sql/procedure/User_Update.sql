@@ -5,7 +5,8 @@ CREATE OR ALTER PROCEDURE [barber].[User_Update]
     @IsAdmin BIT,
     @IsEditor BIT,
     @IsApprover BIT,
-    @IsExecutor BIT
+    @IsExecutor BIT,
+    @AllowCustom BIT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -34,7 +35,8 @@ BEGIN
             [IsAdmin] = @IsAdmin,
             [IsEditor] = @IsEditor,
             [IsApprover] = @IsApprover,
-            [IsExecutor] = @IsExecutor
+            [IsExecutor] = @IsExecutor,
+            [AllowCustom] = @AllowCustom
         OUTPUT
                 deleted.[UserName],
                 deleted.[Revision],
@@ -44,7 +46,8 @@ BEGIN
                 deleted.[IsAdmin],
                 deleted.[IsEditor],
                 deleted.[IsApprover],
-                deleted.[IsExecutor]
+                deleted.[IsExecutor],
+                deleted.[AllowCustom]
             INTO [barber].[UserHistory] (
                 [UserName],
                 [Revision],
@@ -54,7 +57,8 @@ BEGIN
                 [IsAdmin],
                 [IsEditor],
                 [IsApprover],
-                [IsExecutor])
+                [IsExecutor],
+                [AllowCustom])
         WHERE [UserName] = @UserName;
 
     RETURN @@ROWCOUNT;

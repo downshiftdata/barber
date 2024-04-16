@@ -12,7 +12,10 @@ namespace barber.Data.Models
             IsEditor = response.IsEditor;
             IsApprover = response.IsApprover;
             IsExecutor = response.IsExecutor;
+            AllowCustom = response.AllowCustom;
         }
+
+        public bool AllowCustom { get; set; } = false;
 
         public string EditByUserName { get; set; } = string.Empty;
 

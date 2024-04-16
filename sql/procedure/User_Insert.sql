@@ -5,7 +5,8 @@ CREATE OR ALTER PROCEDURE [barber].[User_Insert]
     @IsAdmin BIT,
     @IsEditor BIT,
     @IsApprover BIT,
-    @IsExecutor BIT
+    @IsExecutor BIT,
+    @AllowCustom BIT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -33,7 +34,8 @@ BEGIN
             [IsAdmin],
             [IsEditor],
             [IsApprover],
-            [IsExecutor])
+            [IsExecutor],
+            [AllowCustom])
         SELECT
             @UserName,
             1,
@@ -43,7 +45,8 @@ BEGIN
             @IsAdmin,
             @IsEditor,
             @IsApprover,
-            @IsExecutor;
+            @IsExecutor,
+            @AllowCustom;
 
     RETURN @@ROWCOUNT;
 END;

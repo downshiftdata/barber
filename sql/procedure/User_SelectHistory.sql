@@ -13,7 +13,8 @@ BEGIN
             u.[IsAdmin],
             u.[IsEditor],
             u.[IsApprover],
-            u.[IsExecutor]
+            u.[IsExecutor],
+            u.[AllowCustom]
         FROM [barber].[User] AS u
         WHERE u.[UserName] = @UserName
     UNION ALL
@@ -26,7 +27,8 @@ BEGIN
             uh.[IsAdmin],
             uh.[IsEditor],
             uh.[IsApprover],
-            uh.[IsExecutor]
+            uh.[IsExecutor],
+            uh.[AllowCustom]
         FROM [barber].[UserHistory] AS uh
         WHERE uh.[UserName] = @UserName
     ORDER BY [Revision];

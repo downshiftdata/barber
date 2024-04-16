@@ -20,17 +20,14 @@ namespace barber.Data.Models
             IsEditor = (bool)values[6];
             IsApprover = (bool)values[7];
             IsExecutor = (bool)values[8];
+            AllowCustom = (bool)values[9];
         }
+
+        public bool AllowCustom { get; }
 
         public string EditByUserName { get; }
 
         public System.DateTime EditDateTime { get; }
-
-        public string PasswordHash { get; }
-
-        public int Revision { get; }
-
-        public string UserName { get; }
 
         public bool IsAdmin { get; }
 
@@ -39,5 +36,11 @@ namespace barber.Data.Models
         public bool IsEditor { get; }
 
         public bool IsExecutor { get; }
+
+        public string PasswordHash { get; }
+
+        public int Revision { get; }
+
+        public string UserName { get; }
     }
 }

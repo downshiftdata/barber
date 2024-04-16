@@ -12,7 +12,8 @@ BEGIN
             u.[IsAdmin],
             u.[IsEditor],
             u.[IsApprover],
-            u.[IsExecutor]
+            u.[IsExecutor],
+            u.[AllowCustom]
         FROM [barber].[User] AS u
         ORDER BY u.[UserName];
 

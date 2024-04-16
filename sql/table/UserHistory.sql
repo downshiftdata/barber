@@ -10,6 +10,7 @@ BEGIN
         [IsEditor] BIT NOT NULL,
         [IsApprover] BIT NOT NULL,
         [IsExecutor] BIT NOT NULL,
+        [AllowCustom] BIT NOT NULL,
         CONSTRAINT [pk_barber_UserHistory] PRIMARY KEY ([UserName], [Revision]))
         WITH (DATA_COMPRESSION = NONE);
 END;
