@@ -1,9 +1,10 @@
 @page "/user/{UserName}/edit"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
-@inject Security.Services.ISecurityService _SecurityService;
+@inject Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Edit User</PageTitle>
 
@@ -71,7 +72,7 @@ else
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
         var response = await _ReadRepository.SelectUserByName(UserName);
-        User = new Data.Models.UserRequest(response);
+        User = Data.Models.UserRequest.Create(response);
     }
 
     private async System.Threading.Tasks.Task Submit()
@@ -80,7 +81,7 @@ else
         {
             if (!string.IsNullOrEmpty(Password))
             {
-                User.PasswordHash = _SecurityService.OneWayEncrypt(Password);
+                User.PasswordHash = _EncryptionService.OneWayEncrypt(Password);
             }
             User.EditByUserName = "default";
             var result = await _WriteRepository.UpdateUser(User);

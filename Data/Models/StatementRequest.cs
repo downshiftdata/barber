@@ -2,16 +2,19 @@ namespace barber.Data.Models
 {
     public class StatementRequest : IRequestModel
     {
-        public StatementRequest() { }
-
-        public StatementRequest(StatementResponse response)
+        public static StatementRequest Create(StatementResponse response)
         {
-            StatementKey = response.StatementKey;
-            StatementType = response.StatementType;
-            StatementText = response.StatementText;
-            StatementJson = response.StatementJson;
-            CheckDatabaseKey = response.CheckDatabaseKey;
+            return new StatementRequest()
+            {
+                StatementKey = response.StatementKey,
+                StatementType = response.StatementType,
+                StatementText = response.StatementText,
+                StatementJson = response.StatementJson,
+                CheckDatabaseKey = response.CheckDatabaseKey
+            };
         }
+
+        public StatementRequest() { }
 
         public string ApproveByUserName { get; set; } = string.Empty;
 

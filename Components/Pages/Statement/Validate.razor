@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject Data.Repositories.IExecuteRepository _ExecuteRepository;
 @inject Data.Repositories.IReadRepository _ReadRepository;
-@inject Security.Services.ISecurityService _SecurityService;
+@inject Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Validate Statement</PageTitle>
 
@@ -74,7 +74,7 @@ else
         if (Statement != null && Statement.StatementText != null)
         {
             var database = await _ReadRepository.SelectDatabaseByKey(Statement.CheckDatabaseKey);
-            var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _SecurityService.Decrypt(database.PasswordHash);
+            var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
             var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
             Result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
         }

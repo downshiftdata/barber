@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject Data.Repositories.IExecuteRepository _ExecuteRepository;
 @inject Data.Repositories.IReadRepository _ReadRepository;
-@inject Security.Services.ISecurityService _SecurityService;
+@inject Security.Services.IEncryptionService _EncryptionService;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
 
 <PageTitle>Execute</PageTitle>
@@ -78,7 +78,7 @@ else
             if (statement.StatementText is null) throw new System.ArgumentNullException("StatementText");
             Execution.ExecuteByUserName = "default";
             Execution.ExecuteDateTime = System.DateTime.UtcNow;
-            var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _SecurityService.Decrypt(database.PasswordHash);
+            var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
             var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
             Result = _ExecuteRepository.ExecuteStatement(statement.StatementText, options);
             Execution.ExecuteMs = (long)System.DateTime.UtcNow.Subtract(Execution.ExecuteDateTime).TotalMilliseconds;

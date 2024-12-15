@@ -80,7 +80,8 @@ namespace barber.Data.Repositories
                 base.CreateBoolParameter("IsAdmin", request.IsAdmin),
                 base.CreateBoolParameter("IsEditor", request.IsEditor),
                 base.CreateBoolParameter("IsApprover", request.IsApprover),
-                base.CreateBoolParameter("IsExecutor", request.IsExecutor)
+                base.CreateBoolParameter("IsExecutor", request.IsExecutor),
+                base.CreateBoolParameter("AllowCustom", request.AllowCustom)
             };
             var result = await base.Execute("User_Insert", p);
             return new Models.WriteResult(result.ReturnValue == 1, null);
@@ -131,7 +132,8 @@ namespace barber.Data.Repositories
                 base.CreateBoolParameter("IsAdmin", request.IsAdmin),
                 base.CreateBoolParameter("IsEditor", request.IsEditor),
                 base.CreateBoolParameter("IsApprover", request.IsApprover),
-                base.CreateBoolParameter("IsExecutor", request.IsExecutor)
+                base.CreateBoolParameter("IsExecutor", request.IsExecutor),
+                base.CreateBoolParameter("AllowCustom", request.AllowCustom)
             };
             var result = await base.Execute("User_Update", p);
             return new Models.WriteResult(result.ReturnValue == 1, null);

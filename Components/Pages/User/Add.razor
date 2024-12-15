@@ -1,9 +1,10 @@
 @page "/user/add"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
-@inject Security.Services.ISecurityService _SecurityService;
+@inject Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Add User</PageTitle>
 
@@ -76,7 +77,7 @@ else
         {
             if (!string.IsNullOrEmpty(Password))
             {
-                User.PasswordHash = _SecurityService.OneWayEncrypt(Password);
+                User.PasswordHash = _EncryptionService.OneWayEncrypt(Password);
             }
             User.EditByUserName = "default";
             var result = await _WriteRepository.InsertUser(User);

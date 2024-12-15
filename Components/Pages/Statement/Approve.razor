@@ -48,7 +48,7 @@ else
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
         var response = await _ReadRepository.SelectStatementByKey(Key);
-        Statement = new Data.Models.StatementRequest(response);
+        Statement = Data.Models.StatementRequest.Create(response);
     }
 
     private async System.Threading.Tasks.Task Submit()

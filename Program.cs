@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using barber.Components;
 using barber.Data.Extensions;
+using barber.JsInterop.Extensions;
 using barber.Security.Extensions;
 
 namespace barber
@@ -16,7 +16,10 @@ namespace barber
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddData();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddJsInterop();
             builder.Services.AddSecurity();
 
             var app = builder.Build();
@@ -31,10 +34,13 @@ namespace barber
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseStaticFiles();
             app.UseAntiforgery();
 
-            app.MapRazorComponents<App>()
+            app.MapRazorComponents<Components.App>()
                 .AddInteractiveServerRenderMode();
 
             app.Run();

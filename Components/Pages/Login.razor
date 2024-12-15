@@ -1,0 +1,43 @@
+@page "/login"
+@inject NavigationManager Navigation
+@inject barber.Security.Services.IAuthenticationService AuthenticationService;
+
+<form method="post" @onsubmit="Submit" @formname="login-form">
+        <AntiforgeryToken />
+        <div class="form-group row mb-3">
+            <label class="col-sm-2 control-label">User Name</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="UserName" />
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" type="password" @bind-Value="Password" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
+</form>
+
+
+@code {
+
+    [CascadingParameter]
+    public Microsoft.AspNetCore.Http.HttpContext HttpContext { get; set; } = null!;
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public string? UserName { get; set; }
+
+
+    [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
+    public string? Password { get; set; }
+
+    private async System.Threading.Tasks.Task Submit()
+    {
+        if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
+        {
+            await AuthenticationService.AuthenticateAsync(HttpContext, UserName, Password);
+            Navigation.NavigateTo("/");
+        }
+    }
+}

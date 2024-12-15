@@ -2,18 +2,21 @@ namespace barber.Data.Models
 {
     public class UserRequest : IRequestModel
     {
-        public UserRequest() { }
-
-        public UserRequest(UserResponse response)
+        public static UserRequest Create(UserResponse response)
         {
-            UserName = response.UserName;
-            PasswordHash = response.PasswordHash;
-            IsAdmin = response.IsAdmin;
-            IsEditor = response.IsEditor;
-            IsApprover = response.IsApprover;
-            IsExecutor = response.IsExecutor;
-            AllowCustom = response.AllowCustom;
+            return new UserRequest()
+            {
+                UserName = response.UserName,
+                PasswordHash = response.PasswordHash,
+                IsAdmin = response.IsAdmin,
+                IsEditor = response.IsEditor,
+                IsApprover = response.IsApprover,
+                IsExecutor = response.IsExecutor,
+                AllowCustom = response.AllowCustom
+            };
         }
+
+        public UserRequest() { }
 
         public bool AllowCustom { get; set; } = false;
 

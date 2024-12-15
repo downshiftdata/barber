@@ -1,6 +1,6 @@
 namespace barber.Security.Services
 {
-    public interface ISecurityService
+    public interface IEncryptionService
     {
         string Decrypt(string value);
 

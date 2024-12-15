@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
-@inject Security.Services.ISecurityService _SecurityService;
+@inject Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Add Database</PageTitle>
 
@@ -79,7 +79,7 @@ else
         {
             if (!string.IsNullOrEmpty(Password))
             {
-                Database.PasswordHash = _SecurityService.Encrypt(Password);
+                Database.PasswordHash = _EncryptionService.Encrypt(Password);
             }
             Database.EditByUserName = "default";
             var result = await _WriteRepository.InsertDatabase(Database);
