@@ -1,7 +1,6 @@
 SET NOCOUNT ON;
 GO
 
-/* HACK: Change when proper security is added. */
 IF NOT EXISTS (SELECT 1 FROM [barber].[User])
 BEGIN
     INSERT INTO [barber].[User] (
@@ -20,7 +19,7 @@ BEGIN
             1,
             N'default',
             GETUTCDATE(),
-            N'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+            N'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=',
             1,
             0,
             0,

@@ -1,5 +1,5 @@
 @page "/user/add"
-@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 @inject Data.Repositories.IReadRepository _ReadRepository;

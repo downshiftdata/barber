@@ -68,7 +68,7 @@ namespace barber.Data.Repositories
             return result ?? throw new System.InvalidOperationException();
         }
 
-        public async System.Threading.Tasks.Task<Models.UserResponse> SelectUserByCredentials(string userName, string passwordHash)
+        public async System.Threading.Tasks.Task<Models.UserResponse?> SelectUserByCredentials(string userName, string passwordHash)
         {
             var p = new System.Data.IDataParameter[]
             {
@@ -76,7 +76,7 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("PasswordHash", passwordHash)
             };
             var result = (await base.GetSingle<Models.UserResponse>("User_SelectByCredentials", Models.UserResponse.Load, p)).SingleResult;
-            return result ?? throw new System.InvalidOperationException();
+            return result;
         }
 
         public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.UserResponse>> SelectUserHistory(string userName)

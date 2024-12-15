@@ -74,12 +74,9 @@ namespace barber.Security.Services
         {
             if (string.IsNullOrWhiteSpace(value)) throw new System.ArgumentNullException(nameof(value));
 
-            using (_ssc.SHA256 sha = _ssc.SHA256.Create())
-            {
-                var bytes = System.Text.Encoding.ASCII.GetBytes(value);
-                var result = sha.ComputeHash(bytes);
-                return System.Text.Encoding.ASCII.GetString(result);
-            }
+            var bytes = System.Text.Encoding.ASCII.GetBytes(value);
+            var result = _ssc.SHA256.HashData(bytes);;
+            return System.Convert.ToBase64String(result); //System.Text.Encoding.ASCII.GetString(result);
         }
     }
 }

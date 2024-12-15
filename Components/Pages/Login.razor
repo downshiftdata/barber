@@ -36,8 +36,14 @@
     {
         if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
         {
-            await AuthenticationService.AuthenticateAsync(HttpContext, UserName, Password);
-            Navigation.NavigateTo("/");
+            if (await AuthenticationService.AuthenticateAsync(HttpContext, UserName, Password))
+            {
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                // TODO: report failure.
+            }
         }
     }
 }
