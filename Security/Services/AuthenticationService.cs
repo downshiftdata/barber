@@ -19,7 +19,6 @@ namespace barber.Security.Services
         public async System.Threading.Tasks.Task<bool> AuthenticateAsync(Microsoft.AspNetCore.Http.HttpContext context, string userName, string password)
         {
             var passwordHash = _EncryptionService.OneWayEncrypt(password);
-            _Logger.LogWarning(passwordHash);
             var user = await _ReadRepository.SelectUserByCredentials(userName, passwordHash);
             if (user == null) return false;
             var claims = new System.Collections.Generic.List<System.Security.Claims.Claim>()

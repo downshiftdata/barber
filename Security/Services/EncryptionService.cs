@@ -76,7 +76,7 @@ namespace barber.Security.Services
 
             var bytes = System.Text.Encoding.ASCII.GetBytes(value);
             var result = _ssc.SHA256.HashData(bytes);;
-            return System.Convert.ToBase64String(result); //System.Text.Encoding.ASCII.GetString(result);
+            return System.Convert.ToBase64String(result);
         }
     }
 }
