@@ -7,11 +7,13 @@ BEGIN
         [EditDateTime] DATETIME NOT NULL,
         [ApproveByUserName] NVARCHAR(128) NULL,
         [ApproveDateTime] DATETIME NULL,
+        [Description] NVARCHAR(128) NOT NULL,
         [StatementType] INT NOT NULL,
         [StatementText] NVARCHAR(MAX) NULL,
         [StatementJson] NVARCHAR(MAX) NULL,
         [CheckDatabaseKey] BIGINT NOT NULL,
-        CONSTRAINT [pk_barber_Statement] PRIMARY KEY ([StatementKey]))
+        CONSTRAINT [pk_barber_Statement] PRIMARY KEY ([StatementKey]),
+        CONSTRAINT [uc_barber_Statement_Description] UNIQUE ([Description]))
         WITH (DATA_COMPRESSION = NONE);
 END;
 GO

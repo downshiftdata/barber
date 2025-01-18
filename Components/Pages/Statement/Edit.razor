@@ -21,6 +21,10 @@ else
             <label class="form-control">@Statement!.StatementKey</label>
         </div>
         <div class="form-group">
+            <label class="control-label">Statement Text</label>
+            <InputText class="form-control" @bind-Value="Statement!.Description" />
+        </div>
+        <div class="form-group">
             <label class="control-label">Statement Type</label>
             <InputSelect class="form-control" @bind-Value="Statement!.StatementType">
                 @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.StatementType)))

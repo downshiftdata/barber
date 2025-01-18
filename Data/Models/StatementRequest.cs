@@ -7,6 +7,7 @@ namespace barber.Data.Models
             return new StatementRequest()
             {
                 StatementKey = response.StatementKey,
+                Description = response.Description,
                 StatementType = response.StatementType,
                 StatementText = response.StatementText,
                 StatementJson = response.StatementJson,
@@ -19,6 +20,8 @@ namespace barber.Data.Models
         public string ApproveByUserName { get; set; } = string.Empty;
 
         public long CheckDatabaseKey { get; set; } = 0;
+
+        public string Description { get; set; } = string.Empty;
 
         public string EditByUserName { get; set; } = string.Empty;
 

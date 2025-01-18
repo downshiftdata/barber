@@ -7,6 +7,7 @@ BEGIN
         [EditDateTime] DATETIME NOT NULL,
         [ApproveByUserName] NVARCHAR(128) NULL,
         [ApproveDateTime] DATETIME NULL,
+        [Description] NVARCHAR(128) NOT NULL,
         [StatementType] INT NOT NULL,
         [StatementText] NVARCHAR(MAX) NULL,
         [StatementJson] NVARCHAR(MAX) NULL,

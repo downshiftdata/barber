@@ -10,6 +10,7 @@ BEGIN
             s.[EditDateTime],
             s.[ApproveByUserName],
             s.[ApproveDateTime],
+            s.[Description],
             s.[StatementType],
             s.[StatementText],
             s.[StatementJson],

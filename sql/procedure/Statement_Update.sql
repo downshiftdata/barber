@@ -1,6 +1,7 @@
 CREATE OR ALTER PROCEDURE [barber].[Statement_Update]
     @StatementKey BIGINT,
     @EditByUserName NVARCHAR(128),
+    @Description NVARCHAR(128),
     @StatementType INT,
     @StatementText NVARCHAR(MAX),
     @StatementJson NVARCHAR(MAX),
@@ -33,6 +34,12 @@ BEGIN
             WHERE [DatabaseKey] = @CheckDatabaseKey)
         THROW 50003, N'CheckDatabaseKey', 2;
 
+    IF EXISTS (SELECT 1
+            FROM [barber].[Statement]
+            WHERE [StatementKey] != @StatementKey
+                AND [Description] = @Description)
+        THROW 50001, N'Description', 2;
+
     UPDATE [barber].[Statement]
         SET
             [Revision] = @revision + 1,
@@ -40,6 +47,7 @@ BEGIN
             [EditDateTime] = GETUTCDATE(),
             [ApproveByUserName] = NULL,
             [ApproveDateTime] = NULL,
+            [Description] = @Description,
             [StatementType] = @StatementType,
             [StatementText] = @StatementText,
             [StatementJson] = @StatementJson,

@@ -76,6 +76,8 @@ else
             var statement = await _ReadRepository.SelectStatementByKey(Execution.StatementKey);
             var database = await _ReadRepository.SelectDatabaseByKey(Execution.DatabaseKey);
             if (statement.StatementText is null) throw new System.ArgumentNullException("StatementText");
+            if (statement.ApproveByUserName is null) throw new System.ArgumentNullException("ApproveByUserName");
+            if (statement.ApproveDateTime is null) throw new System.ArgumentNullException("ApproveDateTime");
             Execution.ExecuteByUserName = "default";
             Execution.ExecuteDateTime = System.DateTime.UtcNow;
             var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);

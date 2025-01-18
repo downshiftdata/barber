@@ -1,6 +1,7 @@
 CREATE OR ALTER PROCEDURE [barber].[Statement_Insert]
     @StatementKey BIGINT OUTPUT,
     @EditByUserName NVARCHAR(128),
+    @Description NVARCHAR(128),
     @StatementType INT,
     @StatementText NVARCHAR(MAX),
     @StatementJson NVARCHAR(MAX),
@@ -12,10 +13,13 @@ BEGIN
     IF (@StatementKey IS NOT NULL)
         THROW 50002, N'StatementKey', 1;
 
+    IF (@Description IS NULL)
+        THROW 50001, N'Description', 1;
+
     IF NOT EXISTS (SELECT 1
             FROM [barber].[StatementType]
             WHERE [StatementTypeKey] = @StatementType)
-        THROW 50001, N'StatementType', 1;
+        THROW 50001, N'StatementType', 2;
 
     IF NOT EXISTS (SELECT 1
             FROM [barber].[User]
@@ -27,12 +31,18 @@ BEGIN
             WHERE [DatabaseKey] = @CheckDatabaseKey)
         THROW 50003, N'CheckDatabaseKey', 2;
 
+    IF EXISTS (SELECT 1
+            FROM [barber].[Statement]
+            WHERE [Description] = @Description)
+        THROW 50001, N'Description', 3;
+
     INSERT INTO [barber].[Statement] (
             [Revision],
             [EditByUserName],
             [EditDateTime],
             [ApproveByUserName],
             [ApproveDateTime],
+            [Description],
             [StatementType],
             [StatementText],
             [StatementJson],
@@ -43,6 +53,7 @@ BEGIN
             GETUTCDATE(),
             NULL,
             NULL,
+            @Description,
             @StatementType,
             @StatementText,
             @StatementJson,

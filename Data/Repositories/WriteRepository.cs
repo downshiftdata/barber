@@ -60,6 +60,7 @@ namespace barber.Data.Repositories
             {
                 base.CreateKeyParameterWithOutput("StatementKey", System.DBNull.Value),
                 base.CreateStringParameter("EditByUserName", request.EditByUserName),
+                base.CreateStringParameter("Description", request.Description),
                 base.CreateEnumParameter("StatementType", request.StatementType),
                 base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
                 base.CreateJsonParameter("StatementJson", request.StatementJson),
@@ -113,6 +114,7 @@ namespace barber.Data.Repositories
             {
                 base.CreateKeyParameter("StatementKey", request.StatementKey),
                 base.CreateStringParameter("EditByUserName", request.EditByUserName),
+                base.CreateStringParameter("Description", request.Description),
                 base.CreateEnumParameter("StatementType", request.StatementType),
                 base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
                 base.CreateJsonParameter("StatementJson", request.StatementJson),

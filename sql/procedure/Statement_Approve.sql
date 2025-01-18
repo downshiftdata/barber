@@ -10,7 +10,6 @@ BEGIN
     SELECT @revision = [Revision]
         FROM [barber].[Statement]
         WHERE [StatementKey] = @StatementKey
-            AND [ApproveByUserName] IS NULL
             AND [StatementText] IS NOT NULL;
 
     IF (@revision IS NULL)
@@ -33,6 +32,7 @@ BEGIN
                 deleted.[EditDateTime],
                 deleted.[ApproveByUserName],
                 deleted.[ApproveDateTime],
+                deleted.[Description],
                 deleted.[StatementType],
                 deleted.[StatementText],
                 deleted.[StatementJson],
@@ -46,6 +46,7 @@ BEGIN
                 [EditDateTime],
                 [ApproveByUserName],
                 [ApproveDateTime],
+                [Description],
                 [StatementType],
                 [StatementText],
                 [StatementJson],

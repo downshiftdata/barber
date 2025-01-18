@@ -5,13 +5,9 @@ BEGIN
 
     SELECT
             s.[StatementKey] AS [ItemKey],
-            N'[' + st.[StatementTypeName] + N'] ' + s.[StatementText] AS [ItemText]
+            s.[Description] AS [ItemText]
         FROM [barber].[Statement] AS s
-            INNER JOIN [barber].[StatementType] AS st
-                ON s.[StatementType] = st.[StatementTypeKey]
-                AND s.[ApproveByUserName] IS NOT NULL
-                AND s.[ApproveDateTime] IS NOT NULL
-        ORDER BY s.[StatementKey];
+        ORDER BY s.[Description];
 
     RETURN @@ROWCOUNT;
 END;
