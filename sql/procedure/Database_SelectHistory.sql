@@ -33,7 +33,7 @@ BEGIN
             [Description]
         FROM [barber].[DatabaseHistory]
         WHERE [DatabaseKey] = @DatabaseKey
-    ORDER BY [Revision];
+    ORDER BY [Revision] DESC;
 
     RETURN @@ROWCOUNT;
 END;

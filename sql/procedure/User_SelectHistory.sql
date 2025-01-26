@@ -31,7 +31,7 @@ BEGIN
             uh.[AllowCustom]
         FROM [barber].[UserHistory] AS uh
         WHERE uh.[UserName] = @UserName
-    ORDER BY [Revision];
+    ORDER BY [Revision] DESC;
 
     RETURN @@ROWCOUNT;
 END;

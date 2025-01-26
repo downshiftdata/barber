@@ -35,7 +35,7 @@ BEGIN
             [barber].[GetDatabaseText](sh.[CheckDatabaseKey]) AS [CheckDatabaseText]
         FROM [barber].[StatementHistory] AS sh
         WHERE sh.[StatementKey] = @StatementKey
-    ORDER BY [Revision];
+    ORDER BY [Revision] DESC;
 
     RETURN @@ROWCOUNT;
 END;
