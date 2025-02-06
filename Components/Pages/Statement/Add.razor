@@ -31,6 +31,14 @@ else
             </InputSelect>
         </div>
         <div class="form-group">
+            <label class="control-label">Schema Name</label>
+            <InputText class="form-control" @bind-Value="Statement!.SchemaName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Table Name</label>
+            <InputText class="form-control" @bind-Value="Statement!.TableName" />
+        </div>
+        <div class="form-group">
             <label class="control-label">Statement Text</label>
             <InputText class="form-control" @bind-Value="Statement!.StatementText" />
         </div>

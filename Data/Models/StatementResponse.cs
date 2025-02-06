@@ -19,10 +19,12 @@ namespace barber.Data.Models
             ApproveDateTime = values[5].DbNullToDateTime();
             Description = (string)values[6];
             StatementType = (Enum.StatementType)values[7];
-            StatementText = values[8].DbNullToString();
-            StatementJson = values[9].DbNullToString();
-            CheckDatabaseKey = (long)values[10];
-            CheckDatabaseText = (string?)values[11];
+            SchemaName = values[8].DbNullToString();
+            TableName = values[9].DbNullToString();
+            StatementText = values[10].DbNullToString();
+            StatementJson = values[11].DbNullToString();
+            CheckDatabaseKey = (long)values[12];
+            CheckDatabaseText = (string?)values[13];
         }
 
         public string? ApproveByUserName { get; }
@@ -41,6 +43,8 @@ namespace barber.Data.Models
 
         public int Revision { get; }
 
+        public string? SchemaName { get; }
+
         public string? StatementJson { get; }
 
         public long StatementKey { get; }
@@ -49,5 +53,6 @@ namespace barber.Data.Models
 
         public Enum.StatementType StatementType { get; }
 
+        public string? TableName { get; }
     }
 }

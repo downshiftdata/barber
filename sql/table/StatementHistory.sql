@@ -9,6 +9,8 @@ BEGIN
         [ApproveDateTime] DATETIME NULL,
         [Description] NVARCHAR(128) NOT NULL,
         [StatementType] INT NOT NULL,
+        [SchemaName] NVARCHAR(128) NULL,
+        [TableName] NVARCHAR(128) NULL,
         [StatementText] NVARCHAR(MAX) NULL,
         [StatementJson] NVARCHAR(MAX) NULL,
         [CheckDatabaseKey] BIGINT NOT NULL,

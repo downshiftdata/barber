@@ -3,7 +3,11 @@ CREATE OR ALTER PROCEDURE [barber].[Statement_Insert]
     @EditByUserName NVARCHAR(128),
     @Description NVARCHAR(128),
     @StatementType INT,
+    @SchemaName NVARCHAR(128),
+    @TableName NVARCHAR(128),
     @StatementText NVARCHAR(MAX),
+    @SchemaName NVARCHAR(128),
+    @TableName NVARCHAR(128),
     @StatementJson NVARCHAR(MAX),
     @CheckDatabaseKey BIGINT
 AS
@@ -44,6 +48,8 @@ BEGIN
             [ApproveDateTime],
             [Description],
             [StatementType],
+            [SchemaName],
+            [TableName],
             [StatementText],
             [StatementJson],
             [CheckDatabaseKey])
@@ -55,6 +61,8 @@ BEGIN
             NULL,
             @Description,
             @StatementType,
+            @SchemaName,
+            @TableName,
             @StatementText,
             @StatementJson,
             @CheckDatabaseKey;

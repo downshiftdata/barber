@@ -9,6 +9,8 @@ namespace barber.Data.Models
                 StatementKey = response.StatementKey,
                 Description = response.Description,
                 StatementType = response.StatementType,
+                SchemaName = response.SchemaName,
+                TableName = response.TableName,
                 StatementText = response.StatementText,
                 StatementJson = response.StatementJson,
                 CheckDatabaseKey = response.CheckDatabaseKey
@@ -25,6 +27,8 @@ namespace barber.Data.Models
 
         public string EditByUserName { get; set; } = string.Empty;
 
+        public string? SchemaName { get; set; }
+
         public string? StatementJson { get; set; }
 
         public long? StatementKey { get; set; }
@@ -33,5 +37,6 @@ namespace barber.Data.Models
 
         public Enum.StatementType StatementType { get; set; } = Enum.StatementType.None;
 
+        public string? TableName { get; set; }
     }
 }

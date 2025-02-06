@@ -13,6 +13,8 @@ BEGIN
             s.[ApproveDateTime],
             s.[Description],
             s.[StatementType],
+            s.[SchemaName],
+            s.[TableName],
             s.[StatementText],
             s.[StatementJson],
             s.[CheckDatabaseKey],
