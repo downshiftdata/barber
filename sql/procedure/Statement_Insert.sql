@@ -6,8 +6,6 @@ CREATE OR ALTER PROCEDURE [barber].[Statement_Insert]
     @SchemaName NVARCHAR(128),
     @TableName NVARCHAR(128),
     @StatementText NVARCHAR(MAX),
-    @SchemaName NVARCHAR(128),
-    @TableName NVARCHAR(128),
     @StatementJson NVARCHAR(MAX),
     @CheckDatabaseKey BIGINT
 AS
