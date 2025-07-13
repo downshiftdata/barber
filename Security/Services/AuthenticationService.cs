@@ -16,7 +16,7 @@ namespace barber.Security.Services
             _Logger = logger;
         }
 
-        public async System.Threading.Tasks.Task<bool> AuthenticateAsync(Microsoft.AspNetCore.Http.HttpContext context, string userName, string password)
+        public async System.Threading.Tasks.Task<bool> SignInAsync(Microsoft.AspNetCore.Http.HttpContext context, string userName, string password)
         {
             var passwordHash = _EncryptionService.OneWayEncrypt(password);
             var user = await _ReadRepository.SelectUserByCredentials(userName, passwordHash);
@@ -32,7 +32,14 @@ namespace barber.Security.Services
             var identity = new System.Security.Claims.ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new System.Security.Claims.ClaimsPrincipal(identity);
             await context.SignInAsync(principal);
-            _Logger.LogInformation("User {userName} authenticated.", userName);
+            _Logger.LogInformation("User {userName} signed in.", userName);
+            return true;
+        }
+
+        public async System.Threading.Tasks.Task<bool> SignOutAsync(Microsoft.AspNetCore.Http.HttpContext context)
+        {
+            await context.SignOutAsync(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
+            _Logger.LogInformation("Signed out.");
             return true;
         }
     }

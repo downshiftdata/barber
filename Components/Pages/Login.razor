@@ -36,7 +36,7 @@
     {
         if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
         {
-            if (await AuthenticationService.AuthenticateAsync(HttpContext, UserName, Password))
+            if (await AuthenticationService.SignInAsync(HttpContext, UserName, Password))
             {
                 Navigation.NavigateTo("/");
             }
