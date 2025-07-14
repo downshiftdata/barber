@@ -1,7 +1,9 @@
 @page "/statement/{Key:int}/edit"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Editor)]
 @rendermode InteractiveServer
-@inject NavigationManager Navigation
+@using barber.Extensions;
+
+@inject NavigationManager Navigation;
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
 
@@ -22,30 +24,36 @@ else
             <label class="form-control">@Statement!.StatementKey</label>
         </div>
         <div class="form-group">
-            <label class="control-label">Statement Text</label>
+            <label class="control-label">Description</label>
             <InputText class="form-control" @bind-Value="Statement!.Description" />
         </div>
         <div class="form-group">
             <label class="control-label">Statement Type</label>
-            <InputSelect class="form-control" @bind-Value="Statement!.StatementType">
+            <InputSelect class="form-control" @bind-Value="Statement!.StatementType" @onchange="OnStatementTypeChanged">
                 @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.StatementType)))
                 {
                     <option value="@item">@item</option>
                 }
             </InputSelect>
         </div>
-        <div class="form-group">
-            <label class="control-label">Schema Name</label>
-            <InputText class="form-control" @bind-Value="Statement!.SchemaName" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Table Name</label>
-            <InputText class="form-control" @bind-Value="Statement!.TableName" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Statement Text</label>
-            <InputText class="form-control" @bind-Value="Statement!.StatementText" />
-        </div>
+        @if (Statement!.StatementType == barber.Enum.StatementType.Custom)
+        {
+            <div class="form-group">
+                <label class="control-label">Statement Text</label>
+                <InputText class="form-control" @bind-Value="Statement!.StatementText" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label class="control-label">Schema Name</label>
+                <InputText class="form-control" @bind-Value="Statement!.SchemaName" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Table Name</label>
+                <InputText class="form-control" @bind-Value="Statement!.TableName" />
+            </div>
+        }
         <div class="form-group">
             <label class="control-label">Statement JSON</label>
             <InputText class="form-control" @bind-Value="Statement!.StatementJson" />
@@ -86,8 +94,23 @@ else
         if (Statement != null)
         {
             Statement.EditByUserName = "default";
+            switch (Statement.StatementType)
+            {
+                case barber.Enum.StatementType.Custom:
+                    Statement.SchemaName = null;
+                    Statement.TableName = null;
+                    break;
+                default:
+                    Statement.StatementText = null;
+                    break;
+            }
             var result = await _WriteRepository.UpdateStatement(Statement);
             Navigation.NavigateTo("/statement/list");
         }
+    }
+
+    private void OnStatementTypeChanged(ChangeEventArgs e)
+    {
+        Statement!.StatementType = e.Value.ToEnum<barber.Enum.StatementType>(barber.Enum.StatementType.None);
     }
 }
