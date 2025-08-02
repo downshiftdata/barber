@@ -12,7 +12,7 @@ BEGIN
         [SchemaName] NVARCHAR(128) NULL,
         [TableName] NVARCHAR(128) NULL,
         [StatementText] NVARCHAR(MAX) NULL,
-        [StatementJson] NVARCHAR(MAX) NULL,
+        [StatementDetailJson] NVARCHAR(MAX) NULL,
         [CheckDatabaseKey] BIGINT NOT NULL,
         CONSTRAINT [pk_barber_Statement] PRIMARY KEY ([StatementKey]),
         CONSTRAINT [uc_barber_Statement_Description] UNIQUE ([Description]))

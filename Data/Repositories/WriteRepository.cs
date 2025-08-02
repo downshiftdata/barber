@@ -65,7 +65,7 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("SchemaName", request.SchemaName),
                 base.CreateStringParameter("TableName", request.TableName),
                 base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
-                base.CreateJsonParameter("StatementJson", request.StatementJson),
+                base.CreateJsonParameter("StatementDetailJson", request.StatementDetailJson),
                 base.CreateKeyParameter("CheckDatabaseKey", request.CheckDatabaseKey)
             };
             var result = await base.Execute("Statement_Insert", p);
@@ -121,7 +121,7 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("SchemaName", request.SchemaName),
                 base.CreateStringParameter("TableName", request.TableName),
                 base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
-                base.CreateJsonParameter("StatementJson", request.StatementJson),
+                base.CreateJsonParameter("StatementDetailJson", request.StatementDetailJson),
                 base.CreateKeyParameter("CheckDatabaseKey", request.CheckDatabaseKey)
             };
             var result = await base.Execute("Statement_Update", p);

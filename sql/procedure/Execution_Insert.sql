@@ -18,8 +18,7 @@ BEGIN
         FROM [barber].[Statement]
         WHERE [StatementKey] = @StatementKey
             AND [ApproveByUserName] IS NOT NULL
-            AND [ApproveDateTime] IS NOT NULL
-            AND [StatementText] IS NOT NULL;
+            AND [ApproveDateTime] IS NOT NULL;
 
     IF (@statementRevision IS NULL)
         THROW 50002, N'StatementKey', 1;

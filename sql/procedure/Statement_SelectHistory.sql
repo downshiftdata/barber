@@ -16,7 +16,7 @@ BEGIN
             s.[SchemaName],
             s.[TableName],
             s.[StatementText],
-            s.[StatementJson],
+            s.[StatementDetailJson],
             s.[CheckDatabaseKey],
             [barber].[GetDatabaseText](s.[CheckDatabaseKey]) AS [CheckDatabaseText]
         FROM [barber].[Statement] AS s
@@ -34,7 +34,7 @@ BEGIN
             sh.[SchemaName],
             sh.[TableName],
             sh.[StatementText],
-            sh.[StatementJson],
+            sh.[StatementDetailJson],
             sh.[CheckDatabaseKey],
             [barber].[GetDatabaseText](sh.[CheckDatabaseKey]) AS [CheckDatabaseText]
         FROM [barber].[StatementHistory] AS sh

@@ -15,7 +15,7 @@ BEGIN
             s.[SchemaName],
             s.[TableName],
             s.[StatementText],
-            s.[StatementJson],
+            s.[StatementDetailJson],
             s.[CheckDatabaseKey],
             [barber].[GetDatabaseText](s.[CheckDatabaseKey]) AS [CheckDatabaseText]
         FROM [barber].[Statement] AS s

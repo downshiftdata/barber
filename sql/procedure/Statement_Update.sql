@@ -6,7 +6,7 @@ CREATE OR ALTER PROCEDURE [barber].[Statement_Update]
     @SchemaName NVARCHAR(128),
     @TableName NVARCHAR(128),
     @StatementText NVARCHAR(MAX),
-    @StatementJson NVARCHAR(MAX),
+    @StatementDetailJson NVARCHAR(MAX),
     @CheckDatabaseKey BIGINT
 AS
 BEGIN
@@ -54,7 +54,7 @@ BEGIN
             [SchemaName] = @SchemaName,
             [TableName] = @TableName,
             [StatementText] = @StatementText,
-            [StatementJson] = @StatementJson,
+            [StatementDetailJson] = @StatementDetailJson,
             [CheckDatabaseKey] = @CheckDatabaseKey
         OUTPUT
                 deleted.[StatementKey],
@@ -68,7 +68,7 @@ BEGIN
                 deleted.[SchemaName],
                 deleted.[TableName],
                 deleted.[StatementText],
-                deleted.[StatementJson],
+                deleted.[StatementDetailJson],
                 deleted.[CheckDatabaseKey],
                 NULL,
                 NULL
@@ -84,7 +84,7 @@ BEGIN
                 [SchemaName],
                 [TableName],
                 [StatementText],
-                [StatementJson],
+                [StatementDetailJson],
                 [CheckDatabaseKey],
                 [ArchiveByUserName],
                 [ArchiveDateTime])

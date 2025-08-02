@@ -9,8 +9,7 @@ BEGIN
 
     SELECT @revision = [Revision]
         FROM [barber].[Statement]
-        WHERE [StatementKey] = @StatementKey
-            AND [StatementText] IS NOT NULL;
+        WHERE [StatementKey] = @StatementKey;
 
     IF (@revision IS NULL)
         THROW 50002, N'StatementKey', 1;
@@ -37,7 +36,7 @@ BEGIN
                 deleted.[SchemaName],
                 deleted.[TableName],
                 deleted.[StatementText],
-                deleted.[StatementJson],
+                deleted.[StatementDetailJson],
                 deleted.[CheckDatabaseKey],
                 NULL,
                 NULL
@@ -53,7 +52,7 @@ BEGIN
                 [SchemaName],
                 [TableName],
                 [StatementText],
-                [StatementJson],
+                [StatementDetailJson],
                 [CheckDatabaseKey],
                 [ArchiveByUserName],
                 [ArchiveDateTime])

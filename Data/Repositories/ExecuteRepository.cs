@@ -2,7 +2,7 @@ namespace barber.Data.Repositories
 {
     public class ExecuteRepository : IExecuteRepository
     {
-        private const string AdHocTemplate = "{parseOnly}{statement}\r\nSELECT @@ROWCOUNT;";
+        private const string AdHocTemplate = "/* barber */\r\n{parseOnly}{statement}\r\nSELECT @@ROWCOUNT;";
 
         private const string AuthXIntegrated = "Integrated Security=SSPI";
 

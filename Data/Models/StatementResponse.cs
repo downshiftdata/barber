@@ -22,7 +22,7 @@ namespace barber.Data.Models
             SchemaName = values[8].DbNullToString();
             TableName = values[9].DbNullToString();
             StatementText = values[10].DbNullToString();
-            StatementJson = values[11].DbNullToString();
+            StatementDetailJson = values[11].DbNullToString();
             CheckDatabaseKey = (long)values[12];
             CheckDatabaseText = (string?)values[13];
         }
@@ -45,7 +45,7 @@ namespace barber.Data.Models
 
         public string? SchemaName { get; }
 
-        public string? StatementJson { get; }
+        public string? StatementDetailJson { get; }
 
         public long StatementKey { get; }
 

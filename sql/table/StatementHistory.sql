@@ -12,7 +12,7 @@ BEGIN
         [SchemaName] NVARCHAR(128) NULL,
         [TableName] NVARCHAR(128) NULL,
         [StatementText] NVARCHAR(MAX) NULL,
-        [StatementJson] NVARCHAR(MAX) NULL,
+        [StatementDetailJson] NVARCHAR(MAX) NULL,
         [CheckDatabaseKey] BIGINT NOT NULL,
         [ArchiveByUserName] NVARCHAR(128) NULL,
         [ArchiveDateTime] DATETIME NULL,

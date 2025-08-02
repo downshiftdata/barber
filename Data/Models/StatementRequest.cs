@@ -12,7 +12,7 @@ namespace barber.Data.Models
                 SchemaName = response.SchemaName,
                 TableName = response.TableName,
                 StatementText = response.StatementText,
-                StatementJson = response.StatementJson,
+                StatementDetailJson = response.StatementDetailJson,
                 CheckDatabaseKey = response.CheckDatabaseKey
             };
         }
@@ -29,7 +29,7 @@ namespace barber.Data.Models
 
         public string? SchemaName { get; set; }
 
-        public string? StatementJson { get; set; }
+        public string? StatementDetailJson { get; set; }
 
         public long? StatementKey { get; set; }
 

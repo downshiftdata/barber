@@ -6,7 +6,7 @@ CREATE OR ALTER PROCEDURE [barber].[Statement_Insert]
     @SchemaName NVARCHAR(128),
     @TableName NVARCHAR(128),
     @StatementText NVARCHAR(MAX),
-    @StatementJson NVARCHAR(MAX),
+    @StatementDetailJson NVARCHAR(MAX),
     @CheckDatabaseKey BIGINT
 AS
 BEGIN
@@ -49,7 +49,7 @@ BEGIN
             [SchemaName],
             [TableName],
             [StatementText],
-            [StatementJson],
+            [StatementDetailJson],
             [CheckDatabaseKey])
         SELECT
             1,
@@ -62,7 +62,7 @@ BEGIN
             @SchemaName,
             @TableName,
             @StatementText,
-            @StatementJson,
+            @StatementDetailJson,
             @CheckDatabaseKey;
     SELECT @StatementKey = SCOPE_IDENTITY();
 

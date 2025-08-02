@@ -28,7 +28,7 @@ BEGIN
                 deleted.[SchemaName],
                 deleted.[TableName],
                 deleted.[StatementText],
-                deleted.[StatementJson],
+                deleted.[StatementDetailJson],
                 deleted.[CheckDatabaseKey],
                 @ArchiveByUserName,
                 GETUTCDATE()
@@ -44,7 +44,7 @@ BEGIN
                 [SchemaName],
                 [TableName],
                 [StatementText],
-                [StatementJson],
+                [StatementDetailJson],
                 [CheckDatabaseKey],
                 [ArchiveByUserName],
                 [ArchiveDateTime])
