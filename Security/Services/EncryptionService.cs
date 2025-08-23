@@ -28,7 +28,7 @@ namespace barber.Security.Services
 
                 _ssc.ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                using (System.IO.MemoryStream memoryStream = new (System.Text.Encoding.ASCII.GetBytes(value)))
+                using (System.IO.MemoryStream memoryStream = new (System.Convert.FromBase64String(value)))
                 {
                     using (_ssc.CryptoStream cryptoStream = new (memoryStream, decryptor, _ssc.CryptoStreamMode.Read))
                     {
@@ -55,16 +55,16 @@ namespace barber.Security.Services
 
                 _ssc.ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-                var bytes = System.Text.Encoding.ASCII.GetBytes(value);
+                //var bytes = System.Text.Encoding.ASCII.GetBytes(value);
                 using (System.IO.MemoryStream memoryStream = new ())
                 {
                     using (_ssc.CryptoStream cryptoStream = new (memoryStream, encryptor, _ssc.CryptoStreamMode.Write))
                     {
                         using (System.IO.StreamWriter streamWriter = new (cryptoStream))
                         {
-                            streamWriter.Write(bytes);
+                            streamWriter.Write(value);
                         }
-                        return System.Text.Encoding.ASCII.GetString(memoryStream.ToArray());
+                        return System.Convert.ToBase64String(memoryStream.ToArray());
                     }
                 }
             }

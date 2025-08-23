@@ -4,6 +4,7 @@
 @using barber.Extensions;
 
 @inject NavigationManager Navigation;
+@inject CodeGen.Services.IStatementService _StatementService;
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Data.Repositories.IWriteRepository _WriteRepository;
 
@@ -104,6 +105,7 @@ else
                     Statement.StatementText = null;
                     break;
             }
+            Statement.StatementText = _StatementService.GetStatementText(Statement);
             var result = await _WriteRepository.UpdateStatement(Statement);
             Navigation.NavigateTo("/statement/list");
         }

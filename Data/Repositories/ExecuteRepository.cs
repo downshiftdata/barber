@@ -6,7 +6,7 @@ namespace barber.Data.Repositories
 
         private const string AuthXIntegrated = "Integrated Security=SSPI";
 
-        private const string AuthXUserNameAndPassword = "User Name={0};Password={1}";
+        private const string AuthXUserNameAndPassword = "User ID={0};Password={1}";
 
         private const string ConnectionStringTemplate = "Data Source={0};Initial Catalog={1};{2};Application Name=barber;TrustServerCertificate=true";
 
