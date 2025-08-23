@@ -38,5 +38,7 @@ namespace barber.Data.Models
         public Enum.StatementType StatementType { get; set; } = Enum.StatementType.None;
 
         public string? TableName { get; set; }
+
+        public string ValidateByUserName { get; set; } = string.Empty;
     }
 }

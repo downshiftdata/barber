@@ -2,9 +2,9 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Editor)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject Statements.Builders.IStatementTextBuilder _StatementTextBuilder;
 @inject Data.Repositories.IExecuteRepository _ExecuteRepository;
 @inject Data.Repositories.IReadRepository _ReadRepository;
+@inject Data.Repositories.IWriteRepository _WriteRepository;
 @inject Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Validate Statement</PageTitle>
@@ -87,13 +87,17 @@ else
     {
         if (Statement != null)
         {
-            var statementText = _StatementTextBuilder.Build(Statement);
-            if (statementText is not null)
+            if (Statement.StatementText is not null)
             {
                 var database = await _ReadRepository.SelectDatabaseByKey(Statement.CheckDatabaseKey);
                 var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
                 var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
-                Result = _ExecuteRepository.ValidateStatement(statementText, options);
+                Result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
+                if (Result.IsSuccessful)
+                {
+                    var request = Data.Models.StatementRequest.Create(Statement);
+                    await _WriteRepository.ValidateStatement(request);
+                }
             }
         }
     }

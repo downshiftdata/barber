@@ -5,6 +5,8 @@ BEGIN
         [Revision] INT NOT NULL,
         [EditByUserName] NVARCHAR(128) NOT NULL,
         [EditDateTime] DATETIME NOT NULL,
+        [ValidateByUserName] NVARCHAR(128) NULL,
+        [ValidateDateTime] DATETIME NULL,
         [ApproveByUserName] NVARCHAR(128) NULL,
         [ApproveDateTime] DATETIME NULL,
         [Description] NVARCHAR(128) NOT NULL,

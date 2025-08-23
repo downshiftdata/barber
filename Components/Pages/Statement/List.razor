@@ -21,16 +21,15 @@ else
                 </th>
                 <th>Key</th>
                 <th>Revision</th>
-                <th>Edited</th>
-                <th>By</th>
-                <th>Approved</th>
-                <th>By</th>
+                <th>Edited By</th>
+                <th>Validated By</th>
+                <th>Approved By</th>
                 <th>Description</th>
                 <th>Type</th>
                 <th>Schema</th>
                 <th>Table</th>
-                <th>Text</th>
                 <th>Detail</th>
+                <th>Text</th>
                 <th>Check Database</th>
             </tr>
         </thead>
@@ -48,16 +47,15 @@ else
                     </td>
                     <td>@item.StatementKey</td>
                     <td>@item.Revision</td>
-                    <td>@item.EditDateTime</td>
-                    <td>@item.EditByUserName</td>
-                    <td>@item.ApproveDateTime</td>
-                    <td>@item.ApproveByUserName</td>
+                    <td>@item.EditByUserName<br />@item.EditDateTime</td>
+                    <td>@item.ValidateByUserName<br />@item.ValidateDateTime</td>
+                    <td>@item.ApproveByUserName<br />@item.ApproveDateTime</td>
                     <td>@item.Description</td>
                     <td>@item.StatementType</td>
                     <td>@item.SchemaName</td>
                     <td>@item.TableName</td>
-                    <td>@item.StatementText</td>
                     <td>@item.StatementDetailJson</td>
+                    <td>@item.StatementText</td>
                     <td>@item.CheckDatabaseText</td>
                 </tr>
             }

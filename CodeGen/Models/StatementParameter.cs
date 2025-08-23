@@ -1,6 +1,6 @@
-namespace barber.Statements.Models
+namespace barber.CodeGen.Models
 {
-    public class Parameter
+    public class StatementParameter
     {
         public string Name { get; set; } = string.Empty;
         public System.Data.DbType DbType { get; set; } = System.Data.DbType.String;

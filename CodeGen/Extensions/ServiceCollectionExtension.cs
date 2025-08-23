@@ -1,11 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace barber.Statements.Extensions
+namespace barber.CodeGen.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddStatements(this IServiceCollection services)
+        public static IServiceCollection AddCodeGen(this IServiceCollection services)
         {
+            services.AddSingleton<Services.IStatementService, Services.StatementService>();
             services.AddSingleton<Builders.IStatementTextBuilder, Builders.StatementTextBuilder>();
             return services;
         }

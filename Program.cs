@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using barber.Data.Extensions;
-using barber.Statements.Extensions;
+using barber.CodeGen.Extensions;
 using barber.JsInterop.Extensions;
 using barber.Security.Extensions;
 
@@ -19,7 +19,7 @@ namespace barber
                 .AddInteractiveServerComponents();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddData();
-            builder.Services.AddStatements();
+            builder.Services.AddCodeGen();
             builder.Services.AddMemoryCache();
             builder.Services.AddJsInterop();
             builder.Services.AddSecurity();

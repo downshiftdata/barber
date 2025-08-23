@@ -17,5 +17,7 @@ namespace barber.Data.Repositories
         System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateStatement(Data.Models.StatementRequest request);
 
         System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateUser(Data.Models.UserRequest request);
+
+        System.Threading.Tasks.Task<Data.Models.WriteResult> ValidateStatement(Data.Models.StatementRequest request);
     }
 }

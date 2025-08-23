@@ -2,7 +2,6 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Executor)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation;
-@inject Statements.Builders.IStatementTextBuilder _StatementTextBuilder;
 @inject Data.Repositories.IExecuteRepository _ExecuteRepository;
 @inject Data.Repositories.IReadRepository _ReadRepository;
 @inject Security.Services.IEncryptionService _EncryptionService;
@@ -79,13 +78,12 @@ else
             var database = await _ReadRepository.SelectDatabaseByKey(Execution.DatabaseKey);
             if (statement.ApproveByUserName is null) throw new System.ArgumentNullException("ApproveByUserName");
             if (statement.ApproveDateTime is null) throw new System.ArgumentNullException("ApproveDateTime");
-            var statementText = _StatementTextBuilder.Build(statement);
-            if (statementText is null) throw new System.ArgumentNullException("StatementText");
+            if (statement.StatementText is null) throw new System.ArgumentNullException("StatementText");
             Execution.ExecuteByUserName = "default";
             Execution.ExecuteDateTime = System.DateTime.UtcNow;
             var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
             var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
-            Result = _ExecuteRepository.ExecuteStatement(statementText, options);
+            Result = _ExecuteRepository.ExecuteStatement(statement.StatementText, options);
             Execution.ExecuteMs = (long)System.DateTime.UtcNow.Subtract(Execution.ExecuteDateTime).TotalMilliseconds;
             Execution.RowCount = Result.RowCount;
             var writeResult = await _WriteRepository.InsertExecution(Execution);

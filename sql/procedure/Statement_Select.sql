@@ -8,6 +8,8 @@ BEGIN
             s.[Revision],
             s.[EditByUserName],
             s.[EditDateTime],
+            s.[ValidateByUserName],
+            s.[ValidateDateTime],
             s.[ApproveByUserName],
             s.[ApproveDateTime],
             s.[Description],

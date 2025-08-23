@@ -10,7 +10,7 @@ namespace barber.Data.Repositories
             var p = new System.Data.IDataParameter[]
             {
                 base.CreateKeyParameter("StatementKey", request.StatementKey),
-                base.CreateStringParameter("ApproveByUserName", request.ApproveByUserName),
+                base.CreateStringParameter("ApproveByUserName", request.ApproveByUserName)
             };
             var result = await base.Execute("Statement_Approve", p);
             return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
@@ -26,7 +26,7 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("ExecuteByUserName", request.ExecuteByUserName),
                 base.CreateDateTimeParameter("ExecuteDateTime", request.ExecuteDateTime),
                 base.CreateLongParameter("ExecuteMs", request.ExecuteMs),
-                base.CreateLongParameter("RowCount", request.RowCount),
+                base.CreateLongParameter("RowCount", request.RowCount)
             };
             var result = await base.Execute("Execution_Insert", p);
             var key = (long?)result.ParameterValues["ExecutionKey"];
@@ -143,6 +143,19 @@ namespace barber.Data.Repositories
             };
             var result = await base.Execute("User_Update", p);
             return new Models.WriteResult(result.ReturnValue == 1, null);
+        }
+
+        public async System.Threading.Tasks.Task<Models.WriteResult> ValidateStatement(Models.StatementRequest request)
+        {
+            if (request.StatementKey is null) throw new System.ArgumentNullException("StatementKey");
+            if (request.StatementText is null) throw new System.ArgumentNullException("StatementText");
+            var p = new System.Data.IDataParameter[]
+            {
+                base.CreateKeyParameter("StatementKey", request.StatementKey),
+                base.CreateStringParameter("ValidateByUserName", request.ValidateByUserName)
+            };
+            var result = await base.Execute("Statement_Validate", p);
+            return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
         }
     }
 }
