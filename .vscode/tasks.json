@@ -16,6 +16,20 @@
             }
         },
         {
+            "label": "build-data",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/barber.Data/barber.Data.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "build-web",
             "command": "dotnet",
             "type": "process",
