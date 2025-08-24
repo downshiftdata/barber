@@ -13,11 +13,11 @@ namespace barber.CodeGen.Services
         {
             switch (request.StatementType)
             {
-                case Enum.StatementType.None:
+                case Core.Enum.StatementType.None:
                     return null;
-                case Enum.StatementType.Custom:
+                case Core.Enum.StatementType.Custom:
                     return request.StatementText;
-                case Enum.StatementType.Insert:
+                case Core.Enum.StatementType.Insert:
                     return _Builder.BuildInsert(new Models.StatementBuilderOptions()
                     {
                         StatementType = request.StatementType,

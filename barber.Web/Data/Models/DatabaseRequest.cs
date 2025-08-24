@@ -19,7 +19,7 @@ namespace barber.Data.Models
 
         public DatabaseRequest() { }
 
-        public Enum.AuthenticationType AuthenticationType { get; set; } = Enum.AuthenticationType.None;
+        public Core.Enum.AuthenticationType AuthenticationType { get; set; } = Core.Enum.AuthenticationType.None;
 
         public long? DatabaseKey { get; set; }
 
@@ -29,7 +29,7 @@ namespace barber.Data.Models
 
         public string? EditByUserName { get; set; }
 
-        public Enum.EnvironmentType EnvironmentType { get; set; } = Enum.EnvironmentType.None;
+        public Core.Enum.EnvironmentType EnvironmentType { get; set; } = Core.Enum.EnvironmentType.None;
 
         public string? PasswordHash { get; set; }
 

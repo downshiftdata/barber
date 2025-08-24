@@ -1,7 +1,7 @@
 @page "/statement/add"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Editor)]
 @rendermode InteractiveServer
-@using barber.Extensions;
+@using barber.Core.Extensions;
 @inject NavigationManager Navigation;
 @inject barber.CodeGen.Services.IStatementService _StatementService;
 @inject barber.Data.Repositories.IReadRepository _ReadRepository;
@@ -26,13 +26,13 @@ else
         <div class="form-group">
             <label class="control-label">Statement Type</label>
             <InputSelect class="form-control" @bind-Value="Statement!.StatementType" @onchange="OnStatementTypeChanged">
-                @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.StatementType)))
+                @foreach (var item in System.Enum.GetValues(typeof(barber.Core.Enum.StatementType)))
                 {
                     <option value="@item">@item</option>
                 }
             </InputSelect>
         </div>
-        @if (Statement!.StatementType == barber.Enum.StatementType.Custom)
+        @if (Statement!.StatementType == barber.Core.Enum.StatementType.Custom)
         {
             <div class="form-group">
                 <label class="control-label">Statement Text</label>
@@ -88,7 +88,7 @@ else
             Statement.EditByUserName = "default";
             switch (Statement.StatementType)
             {
-                case barber.Enum.StatementType.Custom:
+                case barber.Core.Enum.StatementType.Custom:
                     Statement.SchemaName = null;
                     Statement.TableName = null;
                     break;
@@ -104,6 +104,6 @@ else
 
     private void OnStatementTypeChanged(ChangeEventArgs e)
     {
-        Statement!.StatementType = e.Value.ToEnum<barber.Enum.StatementType>(barber.Enum.StatementType.None);
+        Statement!.StatementType = e.Value.ToEnum<barber.Core.Enum.StatementType>(barber.Core.Enum.StatementType.None);
     }
 }

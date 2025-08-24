@@ -15,16 +15,16 @@ namespace barber.Data.Models
             Revision = (int)values[1];
             EditByUserName = (string)values[2];
             EditDateTime = (System.DateTime)values[3];
-            EnvironmentType = (Enum.EnvironmentType)values[4];
+            EnvironmentType = (Core.Enum.EnvironmentType)values[4];
             ServerName = (string)values[5];
             DatabaseName = (string)values[6];
-            AuthenticationType = (Enum.AuthenticationType)values[7];
+            AuthenticationType = (Core.Enum.AuthenticationType)values[7];
             UserName = values[8].DbNullToString();
             PasswordHash = values[9].DbNullToString();
             Description = values[10].DbNullToString();
         }
 
-        public Enum.AuthenticationType AuthenticationType { get; }
+        public Core.Enum.AuthenticationType AuthenticationType { get; }
 
         public long? DatabaseKey { get; }
 
@@ -36,7 +36,7 @@ namespace barber.Data.Models
 
         public System.DateTime EditDateTime { get; }
 
-        public Enum.EnvironmentType EnvironmentType { get; }
+        public Core.Enum.EnvironmentType EnvironmentType { get; }
 
         public string? PasswordHash { get; }
 

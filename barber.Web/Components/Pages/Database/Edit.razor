@@ -25,7 +25,7 @@ else
         <div class="form-group">
             <label class="control-label">Environment Type</label>
             <InputSelect class="form-control" @bind-Value="Database!.EnvironmentType">
-                @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.EnvironmentType)))
+                @foreach (var item in System.Enum.GetValues(typeof(barber.Core.Enum.EnvironmentType)))
                 {
                     <option value="@item">@item</option>
                 }
@@ -42,7 +42,7 @@ else
         <div class="form-group">
             <label class="control-label">Authentication Type</label>
             <InputSelect class="form-control" @bind-Value="Database!.AuthenticationType">
-                @foreach (var item in System.Enum.GetValues(typeof(barber.Enum.AuthenticationType)))
+                @foreach (var item in System.Enum.GetValues(typeof(barber.Core.Enum.AuthenticationType)))
                 {
                     <option value="@item">@item</option>
                 }

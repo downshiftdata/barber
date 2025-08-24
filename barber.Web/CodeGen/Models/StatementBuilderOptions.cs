@@ -7,7 +7,7 @@ namespace barber.CodeGen.Models
 
         public required System.Collections.Generic.IEnumerable<StatementParameter> Parameters { get; set; }
 
-        public Enum.StatementType StatementType { get; set; } = Enum.StatementType.None;
+        public Core.Enum.StatementType StatementType { get; set; } = Core.Enum.StatementType.None;
 
         public required string TableName { get; set; }
     }

@@ -1,4 +1,4 @@
-namespace barber.Enum
+namespace barber.Core.Enum
 {
     public enum AuthenticationType
     {

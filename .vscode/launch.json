@@ -5,7 +5,7 @@
             "name": "barber.Web",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-web",
             "program": "${workspaceFolder}/barber.Web/bin/Debug/net8.0/barber.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/barber.Web",

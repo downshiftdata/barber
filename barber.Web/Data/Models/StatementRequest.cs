@@ -35,7 +35,7 @@ namespace barber.Data.Models
 
         public string? StatementText { get; set; }
 
-        public Enum.StatementType StatementType { get; set; } = Enum.StatementType.None;
+        public Core.Enum.StatementType StatementType { get; set; } = Core.Enum.StatementType.None;
 
         public string? TableName { get; set; }
 

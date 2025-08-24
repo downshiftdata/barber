@@ -1,4 +1,4 @@
-namespace barber.Extensions
+namespace barber.Core.Extensions
 {
     public static class ObjectExtension
     {

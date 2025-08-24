@@ -20,7 +20,7 @@ namespace barber.Data.Models
             ApproveByUserName = values[6].DbNullToString();
             ApproveDateTime = values[7].DbNullToDateTime();
             Description = (string)values[8];
-            StatementType = (Enum.StatementType)values[9];
+            StatementType = (Core.Enum.StatementType)values[9];
             SchemaName = values[10].DbNullToString();
             TableName = values[11].DbNullToString();
             StatementText = values[12].DbNullToString();
@@ -53,7 +53,7 @@ namespace barber.Data.Models
 
         public string? StatementText { get; }
 
-        public Enum.StatementType StatementType { get; }
+        public Core.Enum.StatementType StatementType { get; }
 
         public string? TableName { get; }
 
