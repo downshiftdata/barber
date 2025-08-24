@@ -6,7 +6,7 @@ using barber.CodeGen.Extensions;
 using barber.JsInterop.Extensions;
 using barber.Security.Extensions;
 
-namespace barber
+namespace barber.Web
 {
     public class Program
     {

@@ -1,12 +1,12 @@
-@page "/database/{Key:int}/edit"
+@page "/database/add"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject Data.Repositories.IReadRepository _ReadRepository;
-@inject Data.Repositories.IWriteRepository _WriteRepository;
-@inject Security.Services.IEncryptionService _EncryptionService;
+@inject barber.Data.Repositories.IReadRepository _ReadRepository;
+@inject barber.Data.Repositories.IWriteRepository _WriteRepository;
+@inject barber.Security.Services.IEncryptionService _EncryptionService;
 
-<PageTitle>Edit Database</PageTitle>
+<PageTitle>Add Database</PageTitle>
 
 <a class="nav-link" href="/database/list">Back to List</a>
 
@@ -16,12 +16,8 @@
 }
 else
 {
-    <form method="post" @onsubmit="Submit" @formname="database-edit-form">
+    <form method="post" @onsubmit="Submit" @formname="database-add-form">
         <AntiforgeryToken />
-        <div class="form-group">
-            <label class="control-label">Key</label>
-            <label class="form-control">@Database!.DatabaseKey</label>
-        </div>
         <div class="form-group">
             <label class="control-label">Environment Type</label>
             <InputSelect class="form-control" @bind-Value="Database!.EnvironmentType">
@@ -61,25 +57,21 @@ else
             <InputText class="form-control" @bind-Value="Database!.Description" />
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Edit</button>
+            <button class="btn btn-primary" type="submit">Add</button>
         </div>
     </form>
 }
 
 @code {
-    [Parameter]
-    public int Key { get; set; }
-
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
     public Data.Models.DatabaseRequest? Database { get; set; }
 
     [Parameter]
     public string? Password { get; set; }
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var response = await _ReadRepository.SelectDatabaseByKey(Key);
-        Database = Data.Models.DatabaseRequest.Create(response);
+        Database = new Data.Models.DatabaseRequest();
     }
 
     private async System.Threading.Tasks.Task Submit()
@@ -91,7 +83,7 @@ else
                 Database.PasswordHash = _EncryptionService.Encrypt(Password);
             }
             Database.EditByUserName = "default";
-            var result = await _WriteRepository.UpdateDatabase(Database);
+            var result = await _WriteRepository.InsertDatabase(Database);
             Navigation.NavigateTo("/database/list");
         }
     }

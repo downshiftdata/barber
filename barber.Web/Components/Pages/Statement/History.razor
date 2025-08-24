@@ -1,7 +1,7 @@
 @page "/statement/{Key:int}/history"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @rendermode InteractiveServer
-@inject Data.Repositories.IReadRepository _ReadRepository;
+@inject barber.Data.Repositories.IReadRepository _ReadRepository;
 
 <PageTitle>Statement Revisions</PageTitle>
 

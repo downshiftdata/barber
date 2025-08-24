@@ -1,12 +1,12 @@
-@page "/user/{UserName}/edit"
+@page "/user/add"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject Data.Repositories.IReadRepository _ReadRepository;
-@inject Data.Repositories.IWriteRepository _WriteRepository;
-@inject Security.Services.IEncryptionService _EncryptionService;
+@inject barber.Data.Repositories.IReadRepository _ReadRepository;
+@inject barber.Data.Repositories.IWriteRepository _WriteRepository;
+@inject barber.Security.Services.IEncryptionService _EncryptionService;
 
-<PageTitle>Edit User</PageTitle>
+<PageTitle>Add User</PageTitle>
 
 <a class="nav-link" href="/user/list">Back to List</a>
 
@@ -16,7 +16,7 @@
 }
 else
 {
-    <form method="post" @onsubmit="Submit" @formname="user-edit-form">
+    <form method="post" @onsubmit="Submit" @formname="user-add-form">
         <AntiforgeryToken />
         <div class="form-group row mb-3">
             <label class="col-sm-2 control-label">User Name</label>
@@ -55,24 +55,20 @@ else
                 </div>
             </div>
         </fieldset>
-        <button class="btn btn-primary" type="submit">Edit</button>
+        <button class="btn btn-primary" type="submit">Add</button>
     </form>
 }
 
 @code {
-    [Parameter]
-    public string UserName { get; set; } = string.Empty;
-
     [Microsoft.AspNetCore.Components.SupplyParameterFromForm]
     public Data.Models.UserRequest? User { get; set; }
 
     [Parameter]
     public string? Password { get; set; }
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var response = await _ReadRepository.SelectUserByName(UserName);
-        User = Data.Models.UserRequest.Create(response);
+        User = new Data.Models.UserRequest();
     }
 
     private async System.Threading.Tasks.Task Submit()
@@ -84,7 +80,7 @@ else
                 User.PasswordHash = _EncryptionService.OneWayEncrypt(Password);
             }
             User.EditByUserName = "default";
-            var result = await _WriteRepository.UpdateUser(User);
+            var result = await _WriteRepository.InsertUser(User);
             Navigation.NavigateTo("/user/list");
         }
     }
