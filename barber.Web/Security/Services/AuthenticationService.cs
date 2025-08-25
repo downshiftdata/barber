@@ -7,9 +7,9 @@ namespace barber.Security.Services
     {
         private readonly IEncryptionService _EncryptionService;
         private readonly ILogger _Logger;
-        private readonly Data.Repositories.IReadRepository _ReadRepository;
+        private readonly Data.Interfaces.IReadRepository _ReadRepository;
 
-        public AuthenticationService(IEncryptionService encryptionService, Data.Repositories.IReadRepository readRepository, ILogger<AuthenticationService> logger)
+        public AuthenticationService(IEncryptionService encryptionService, Data.Interfaces.IReadRepository readRepository, ILogger<AuthenticationService> logger)
         {
             _EncryptionService = encryptionService;
             _ReadRepository = readRepository;

@@ -4,7 +4,7 @@ namespace barber.Data.Models
 {
     public class UserResponse : IResponseModel
     {
-        static internal UserResponse Load(object[] values)
+        static public UserResponse Load(object[] values)
         {
             return new UserResponse(values);
         }

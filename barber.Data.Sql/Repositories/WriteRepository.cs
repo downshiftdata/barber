@@ -1,10 +1,10 @@
-namespace barber.Data.Repositories
+namespace barber.Data.Sql.Repositories
 {
-    public class WriteRepository : SqlRepositoryBase, IWriteRepository
+    public class WriteRepository : SqlRepositoryBase, Data.Interfaces.IWriteRepository
     {
         public WriteRepository(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> ApproveStatement(Models.StatementRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> ApproveStatement(Data.Models.StatementRequest request)
         {
             if (request.StatementKey is null) throw new System.ArgumentNullException("StatementKey");
             var p = new System.Data.IDataParameter[]
@@ -13,10 +13,10 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("ApproveByUserName", request.ApproveByUserName)
             };
             var result = await base.Execute("Statement_Approve", p);
-            return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> InsertExecution(Models.ExecutionRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> InsertExecution(Data.Models.ExecutionRequest request)
         {
             var p = new System.Data.IDataParameter[]
             {
@@ -30,10 +30,10 @@ namespace barber.Data.Repositories
             };
             var result = await base.Execute("Execution_Insert", p);
             var key = (long?)result.ParameterValues["ExecutionKey"];
-            return new Models.WriteResult(result.ReturnValue == 1, key);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, key);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> InsertDatabase(Models.DatabaseRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> InsertDatabase(Data.Models.DatabaseRequest request)
         {
             if (request.DatabaseKey is not null) throw new System.ArgumentNullException("DatabaseKey");
             var p = new System.Data.IDataParameter[]
@@ -50,10 +50,10 @@ namespace barber.Data.Repositories
             };
             var result = await base.Execute("Database_Insert", p);
             var key = (long?)result.ParameterValues["DatabaseKey"];
-            return new Models.WriteResult(result.ReturnValue == 1, key);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, key);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> InsertStatement(Models.StatementRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> InsertStatement(Data.Models.StatementRequest request)
         {
             if (request.StatementKey is not null) throw new System.ArgumentNullException("StatementKey");
             var p = new System.Data.IDataParameter[]
@@ -70,10 +70,10 @@ namespace barber.Data.Repositories
             };
             var result = await base.Execute("Statement_Insert", p);
             var key = (long?)result.ParameterValues["StatementKey"];
-            return new Models.WriteResult(result.ReturnValue == 1, key);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, key);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> InsertUser(Models.UserRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> InsertUser(Data.Models.UserRequest request)
         {
             var p = new System.Data.IDataParameter[]
             {
@@ -87,10 +87,10 @@ namespace barber.Data.Repositories
                 base.CreateBoolParameter("AllowCustom", request.AllowCustom)
             };
             var result = await base.Execute("User_Insert", p);
-            return new Models.WriteResult(result.ReturnValue == 1, null);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, null);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> UpdateDatabase(Models.DatabaseRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateDatabase(Data.Models.DatabaseRequest request)
         {
             if (request.DatabaseKey is null) throw new System.ArgumentNullException("DatabaseKey");
             var p = new System.Data.IDataParameter[]
@@ -106,10 +106,10 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("Description", request.Description)
             };
             var result = await base.Execute("Database_Update", p);
-            return new Models.WriteResult(result.ReturnValue == 1, request.DatabaseKey);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, request.DatabaseKey);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> UpdateStatement(Models.StatementRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateStatement(Data.Models.StatementRequest request)
         {
             if (request.StatementKey is null) throw new System.ArgumentNullException("StatementKey");
             var p = new System.Data.IDataParameter[]
@@ -125,10 +125,10 @@ namespace barber.Data.Repositories
                 base.CreateKeyParameter("CheckDatabaseKey", request.CheckDatabaseKey)
             };
             var result = await base.Execute("Statement_Update", p);
-            return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> UpdateUser(Models.UserRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> UpdateUser(Data.Models.UserRequest request)
         {
             var p = new System.Data.IDataParameter[]
             {
@@ -142,10 +142,10 @@ namespace barber.Data.Repositories
                 base.CreateBoolParameter("AllowCustom", request.AllowCustom)
             };
             var result = await base.Execute("User_Update", p);
-            return new Models.WriteResult(result.ReturnValue == 1, null);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, null);
         }
 
-        public async System.Threading.Tasks.Task<Models.WriteResult> ValidateStatement(Models.StatementRequest request)
+        public async System.Threading.Tasks.Task<Data.Models.WriteResult> ValidateStatement(Data.Models.StatementRequest request)
         {
             if (request.StatementKey is null) throw new System.ArgumentNullException("StatementKey");
             if (request.StatementText is null) throw new System.ArgumentNullException("StatementText");
@@ -155,7 +155,7 @@ namespace barber.Data.Repositories
                 base.CreateStringParameter("ValidateByUserName", request.ValidateByUserName)
             };
             var result = await base.Execute("Statement_Validate", p);
-            return new Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
+            return new Data.Models.WriteResult(result.ReturnValue == 1, request.StatementKey);
         }
     }
 }

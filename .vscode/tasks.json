@@ -30,6 +30,20 @@
             }
         },
         {
+            "label": "build-data-sql",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/barber.Data.Sql/barber.Data.Sql.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "build-web",
             "command": "dotnet",
             "type": "process",

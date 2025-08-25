@@ -1,4 +1,4 @@
-namespace barber.Data.Repositories
+namespace barber.Data.Interfaces
 {
     public interface IExecuteRepository
     {

@@ -4,7 +4,7 @@ namespace barber.Data.Models
 {
     public class StatementResponse : IResponseModel
     {
-        static internal StatementResponse Load(object[] values)
+        static public StatementResponse Load(object[] values)
         {
             return new StatementResponse(values);
         }

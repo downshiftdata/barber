@@ -2,8 +2,8 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject barber.Data.Repositories.IReadRepository _ReadRepository;
-@inject barber.Data.Repositories.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Edit User</PageTitle>

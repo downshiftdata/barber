@@ -2,10 +2,10 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Executor)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation;
-@inject barber.Data.Repositories.IExecuteRepository _ExecuteRepository;
-@inject barber.Data.Repositories.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IExecuteRepository _ExecuteRepository;
+@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
-@inject barber.Data.Repositories.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
 
 <PageTitle>Execute</PageTitle>
 

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace barber.Data.Models
+namespace barber.Data.Sql.Models
 {
     public class SqlContext : ISqlContext
     {

@@ -1,6 +1,6 @@
-namespace barber.Data.Models
+namespace barber.Data.Sql.Models
 {
-    public class SqlResult<T> : ISqlResult<T> where T : IResponseModel
+    public class SqlResult<T> : ISqlResult<T> where T : Data.Models.IResponseModel
     {
         private System.Collections.Generic.IDictionary<string, object?>? _ParameterValues;
         private System.Collections.Generic.IEnumerable<T>? _Results;

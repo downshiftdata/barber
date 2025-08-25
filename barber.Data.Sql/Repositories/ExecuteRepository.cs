@@ -1,6 +1,6 @@
-namespace barber.Data.Repositories
+namespace barber.Data.Sql.Repositories
 {
-    public class ExecuteRepository : IExecuteRepository
+    public class ExecuteRepository : Data.Interfaces.IExecuteRepository
     {
         private const string AdHocTemplate = "/* barber */\r\n{parseOnly}{statement}\r\nSELECT @@ROWCOUNT;";
 
@@ -14,33 +14,33 @@ namespace barber.Data.Repositories
 
         public ExecuteRepository() { }
 
-        public Models.ExecuteResult ExecuteStatement(string statementText, Models.ConnectionOptions options)
+        public Data.Models.ExecuteResult ExecuteStatement(string statementText, Data.Models.ConnectionOptions options)
         {
             try
             {
                 var result = ExecuteAdHoc(statementText, false, options);
-                return new Models.ExecuteResult(true, result.ReturnValue, null);
+                return new Data.Models.ExecuteResult(true, result.ReturnValue, null);
             }
             catch (System.Exception ex)
             {
-                return new Models.ExecuteResult(false, 0, ex);
+                return new Data.Models.ExecuteResult(false, 0, ex);
             }
         }
 
-        public Models.ExecuteResult ValidateStatement(string statementText, Models.ConnectionOptions options)
+        public Data.Models.ExecuteResult ValidateStatement(string statementText, Data.Models.ConnectionOptions options)
         {
             try
             {
                 var result = ExecuteAdHoc(statementText, true, options);
-                return new Models.ExecuteResult(true, result.ReturnValue, null);
+                return new Data.Models.ExecuteResult(true, result.ReturnValue, null);
             }
             catch (System.Exception ex)
             {
-                return new Models.ExecuteResult(false, 0, ex);
+                return new Data.Models.ExecuteResult(false, 0, ex);
             }
         }
 
-        private static Models.SqlResult<Models.NoResponseModel> ExecuteAdHoc(string statement, bool parseOnly, Models.ConnectionOptions options)
+        private static Models.SqlResult<Data.Models.NoResponseModel> ExecuteAdHoc(string statement, bool parseOnly, Data.Models.ConnectionOptions options)
         {
             var rowCount = 0;
             using (var connection = new Microsoft.Data.SqlClient.SqlConnection(GetConnectionString(options)))
@@ -55,10 +55,10 @@ namespace barber.Data.Repositories
                     rowCount = (int?)command.ExecuteScalar() ?? 0;
                 }
             }
-            return new Models.SqlResult<Models.NoResponseModel>(rowCount, null, null, null);
+            return new Models.SqlResult<Data.Models.NoResponseModel>(rowCount, null, null, null);
         }
 
-        private static string GetConnectionString(Models.ConnectionOptions options)
+        private static string GetConnectionString(Data.Models.ConnectionOptions options)
         {
             var authX = (options.UserName is null || options.Password is null)
                 ? AuthXIntegrated

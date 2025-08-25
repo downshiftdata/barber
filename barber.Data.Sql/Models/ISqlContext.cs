@@ -1,4 +1,4 @@
-namespace barber.Data.Models
+namespace barber.Data.Sql.Models
 {
     public interface ISqlContext
     {

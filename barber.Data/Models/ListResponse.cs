@@ -2,7 +2,7 @@ namespace barber.Data.Models
 {
     public class ListResponse : IResponseModel
     {
-        static internal ListResponse Load(object[] values)
+        static public ListResponse Load(object[] values)
         {
             return new ListResponse(values);
         }

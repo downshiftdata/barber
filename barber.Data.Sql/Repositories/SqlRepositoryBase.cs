@@ -2,7 +2,7 @@ using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using barber.Data.Extensions;
 
-namespace barber.Data.Repositories
+namespace barber.Data.Sql.Repositories
 {
     public abstract class SqlRepositoryBase
     {
@@ -80,10 +80,10 @@ namespace barber.Data.Repositories
             return p;
         }
 
-        public async System.Threading.Tasks.Task<Models.ISqlResult<Models.NoResponseModel>> Execute(string procedureName)
+        public async System.Threading.Tasks.Task<Models.ISqlResult<Data.Models.NoResponseModel>> Execute(string procedureName)
             => await Execute(procedureName, null);
 
-        public async System.Threading.Tasks.Task<Models.ISqlResult<Models.NoResponseModel>> Execute(string procedureName, System.Data.IDataParameter[]? parameters)
+        public async System.Threading.Tasks.Task<Models.ISqlResult<Data.Models.NoResponseModel>> Execute(string procedureName, System.Data.IDataParameter[]? parameters)
         {
             (int returnValue, IDictionary<string, object?>? values) v = (0, null);
             using (var connection = _Context.GetConnection())
@@ -96,20 +96,20 @@ namespace barber.Data.Repositories
                     v = GetValues(command.Parameters);
                 }
             }
-            return new Models.SqlResult<Models.NoResponseModel>(v.returnValue, v.values, null, null);
+            return new Models.SqlResult<Data.Models.NoResponseModel>(v.returnValue, v.values, null, null);
         }
 
         public async System.Threading.Tasks.Task<Models.ISqlResult<T>> Get<T>(
             string procedureName,
             System.Func<object[], T> loader)
-            where T : Models.IResponseModel
+            where T : Data.Models.IResponseModel
             => await Get<T>(procedureName, loader, null);
 
         public async System.Threading.Tasks.Task<Models.ISqlResult<T>> Get<T>(
             string procedureName,
             System.Func<object[], T> loader,
             System.Data.IDataParameter[]? parameters)
-            where T : Models.IResponseModel
+            where T : Data.Models.IResponseModel
         {
             (int returnValue, IDictionary<string, object?>? values) v = (0, null);
             var values = new List<T>();
@@ -149,14 +149,14 @@ namespace barber.Data.Repositories
         public async System.Threading.Tasks.Task<Models.ISqlResult<T>> GetSingle<T>(
             string procedureName,
             System.Func<object[], T> loader)
-            where T : Models.IResponseModel
+            where T : Data.Models.IResponseModel
             => await GetSingle<T>(procedureName, loader, null);
 
         public async System.Threading.Tasks.Task<Models.ISqlResult<T>> GetSingle<T>(
             string procedureName,
             System.Func<object[], T> loader,
             System.Data.IDataParameter[]? parameters)
-            where T : Models.IResponseModel
+            where T : Data.Models.IResponseModel
         {
             (int returnValue, IDictionary<string, object?>? values) v = (0, null);
             T? singleValue = default;

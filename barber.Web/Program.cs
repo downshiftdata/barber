@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using barber.Data.Extensions;
+using barber.Data.Sql.Extensions;
 using barber.CodeGen.Extensions;
 using barber.JsInterop.Extensions;
 using barber.Security.Extensions;
