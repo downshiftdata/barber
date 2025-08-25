@@ -8,9 +8,10 @@
         <ProjectReference Include="..\barber.Core\barber.Core.csproj" />
         <ProjectReference Include="..\barber.Data\barber.Data.csproj" />
         <ProjectReference Include="..\barber.Data.Sql\barber.Data.Sql.csproj" />
+        <ProjectReference Include="..\barber.Security\barber.Security.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.19" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     </ItemGroup>

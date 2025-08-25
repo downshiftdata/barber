@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using barber.Core.Extensions;
 using _ssc = System.Security.Cryptography;
 
 namespace barber.Security.Services
@@ -11,7 +12,7 @@ namespace barber.Security.Services
 
         public EncryptionService(IConfiguration configuration)
         {
-            _Settings = configuration.GetSection(SettingsSectionName).Get<Models.SecuritySettings>() ?? new Models.SecuritySettings();
+            _Settings = configuration.GetSection(SettingsSectionName).Value.FromJson(new Models.SecuritySettings());
         }
 
         public string Decrypt(string value)
