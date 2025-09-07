@@ -1,6 +1,5 @@
-using Microsoft.Extensions.Configuration;
-using barber.Core.Extensions;
 using _ssc = System.Security.Cryptography;
+using Microsoft.Extensions.Options;
 
 namespace barber.Security.Services
 {
@@ -8,23 +7,23 @@ namespace barber.Security.Services
     {
         private const string SettingsSectionName = "Security";
 
-        private readonly Models.SecuritySettings _Settings;
+        private readonly SecurityOptions _Options;
 
-        public EncryptionService(IConfiguration configuration)
+        public EncryptionService(IOptions<SecurityOptions> options)
         {
-            _Settings = configuration.GetSection(SettingsSectionName).Value.FromJson(new Models.SecuritySettings());
+            _Options = options.Value;
         }
 
         public string Decrypt(string value)
         {
-            if (string.IsNullOrWhiteSpace(_Settings.AesKey)) throw new System.ArgumentNullException("AesKey");
-            if (string.IsNullOrWhiteSpace(_Settings.AesIv)) throw new System.ArgumentNullException("AesIv");
+            if (string.IsNullOrWhiteSpace(_Options.AesKey)) throw new System.ArgumentNullException("AesKey");
+            if (string.IsNullOrWhiteSpace(_Options.AesIv)) throw new System.ArgumentNullException("AesIv");
             if (string.IsNullOrWhiteSpace(value)) throw new System.ArgumentNullException(nameof(value));
 
             using (_ssc.Aes aes = _ssc.Aes.Create())
             {
-                aes.Key = System.Text.Encoding.ASCII.GetBytes(_Settings.AesKey);
-                aes.IV = System.Text.Encoding.ASCII.GetBytes(_Settings.AesIv);
+                aes.Key = System.Text.Encoding.ASCII.GetBytes(_Options.AesKey);
+                aes.IV = System.Text.Encoding.ASCII.GetBytes(_Options.AesIv);
                 aes.Padding = _ssc.PaddingMode.PKCS7;
 
                 _ssc.ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
@@ -44,14 +43,14 @@ namespace barber.Security.Services
 
         public string Encrypt(string value)
         {
-            if (string.IsNullOrWhiteSpace(_Settings.AesKey)) throw new System.ArgumentNullException("AesKey");
-            if (string.IsNullOrWhiteSpace(_Settings.AesIv)) throw new System.ArgumentNullException("AesIv");
+            if (string.IsNullOrWhiteSpace(_Options.AesKey)) throw new System.ArgumentNullException("AesKey");
+            if (string.IsNullOrWhiteSpace(_Options.AesIv)) throw new System.ArgumentNullException("AesIv");
             if (string.IsNullOrWhiteSpace(value)) throw new System.ArgumentNullException(nameof(value));
 
             using (_ssc.Aes aes = _ssc.Aes.Create())
             {
-                aes.Key = System.Text.Encoding.ASCII.GetBytes(_Settings.AesKey);
-                aes.IV = System.Text.Encoding.ASCII.GetBytes(_Settings.AesIv);
+                aes.Key = System.Text.Encoding.ASCII.GetBytes(_Options.AesKey);
+                aes.IV = System.Text.Encoding.ASCII.GetBytes(_Options.AesIv);
                 aes.Padding = _ssc.PaddingMode.PKCS7;
 
                 _ssc.ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);

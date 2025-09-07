@@ -1,11 +1,13 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace barber.Security.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddSecurity(this IServiceCollection services)
+        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<SecurityOptions>(configuration.GetSection("Security"));
             services.AddSingleton<Services.IEncryptionService, Services.EncryptionService>();
             services.AddScoped<Services.IAuthenticationService, Services.AuthenticationService>();
             services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)

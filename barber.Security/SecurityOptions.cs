@@ -1,6 +1,6 @@
-namespace barber.Security.Models
+namespace barber.Security
 {
-    public class SecuritySettings
+    public class SecurityOptions
     {
         public string? AesIv { get; set; }
         public string? AesKey { get; set; }
