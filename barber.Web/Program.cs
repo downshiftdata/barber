@@ -22,7 +22,7 @@ namespace barber.Web
             builder.Services.AddCodeGen();
             builder.Services.AddMemoryCache();
             builder.Services.AddJsInterop();
-            builder.Services.AddSecurity();
+            builder.Services.AddSecurity(builder.Configuration);
 
             var app = builder.Build();
 
