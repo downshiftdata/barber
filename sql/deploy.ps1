@@ -19,11 +19,12 @@ function DeployScript([String] $path)
     }
     catch
     {
-        Write-Host("Error:{0},File:{1},Line:{2},Message:{3}" -f `
+        Write-Host("Error:{0},File:{1},Line:{2},Message:{3},State:{4}" -f `
             $_.Exception.InnerException.Number, `
             $path, `
             $_.Exception.InnerException.LineNumber, `
-            $_.Exception.InnerException.Message) `
+            $_.Exception.InnerException.Message, `
+            $_.Exception.InnerException.State) `
             -ForegroundColor Red
         Exit 1;
     }
