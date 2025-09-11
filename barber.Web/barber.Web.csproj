@@ -5,6 +5,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
+        <ProjectReference Include="..\barber.CodeGen\barber.CodeGen.csproj" />
         <ProjectReference Include="..\barber.Core\barber.Core.csproj" />
         <ProjectReference Include="..\barber.Data\barber.Data.csproj" />
         <ProjectReference Include="..\barber.Data.Sql\barber.Data.Sql.csproj" />
