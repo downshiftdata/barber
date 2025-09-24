@@ -96,7 +96,7 @@ else
                     Statement.StatementText = null;
                     break;
             }
-            Statement.StatementText = _StatementService.GetStatementText(Statement);
+            Statement.StatementText = _StatementService.Build(Statement);
             var result = await _WriteRepository.InsertStatement(Statement);
             Navigation.NavigateTo("/statement/list");
         }

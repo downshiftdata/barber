@@ -1,25 +1,15 @@
 namespace barber.CodeGen.Builders
 {
-    public class StatementTextBuilder : IStatementTextBuilder
+    public class InsertStatementBuilder : IStatementBuilder
     {
-        private const string DeleteTemplate = """
-DELETE
-    FROM {schemaName}.{tableName}
-    WHERE {conditionList};
-""";
-
-        private const string InsertTemplate = """
+        private const string Template = """
 INSERT INTO {schemaName}.{tableName} ({columnList})
     SELECT {valueList};
 """;
 
-        private const string UpdateTemplate = """
-UPDATE {schemaName}.{tableName}
-    SET {assignmentList}
-    WHERE {conditionList};
-""";
+        public Core.Enum.StatementType StatementType => Core.Enum.StatementType.Insert;
 
-        public string? BuildInsert(Models.StatementBuilderOptions options)
+        public string? Build(Models.StatementBuilderOptions options)
         {
             // TODO: Currently very crude.
             var columnList = string.Empty;
@@ -31,7 +21,7 @@ UPDATE {schemaName}.{tableName}
             }
             columnList = columnList.TrimEnd(',');
             valueList = valueList.TrimEnd(',');
-            var result = InsertTemplate
+            var result = Template
                 .Replace("{schemaName}", options.SchemaName)
                 .Replace("{tableName}", options.TableName)
                 .Replace("{columnList}", columnList)

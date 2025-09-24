@@ -7,7 +7,7 @@ namespace barber.CodeGen.Extensions
         public static IServiceCollection AddCodeGen(this IServiceCollection services)
         {
             services.AddSingleton<Services.IStatementService, Services.StatementService>();
-            services.AddSingleton<Builders.IStatementTextBuilder, Builders.StatementTextBuilder>();
+            services.AddSingleton<Builders.IStatementBuilder, Builders.InsertStatementBuilder>();
             return services;
         }
     }
