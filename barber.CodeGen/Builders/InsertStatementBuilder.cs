@@ -16,8 +16,8 @@ INSERT INTO {schemaName}.{tableName} ({columnList})
             var valueList = string.Empty;
             foreach (var p in options.Parameters)
             {
-                columnList += p.Name + ",";
-                valueList += "'" + p.Value + "',";
+                columnList += $"{p.Name},";
+                valueList += $"'{p.Value}',";
             }
             columnList = columnList.TrimEnd(',');
             valueList = valueList.TrimEnd(',');
