@@ -22,7 +22,7 @@ namespace barber.CodeGen.Test
             var value = builder.Build(options);
 
             // Assert
-            Xunit.Assert.Equal("DELETE\r\n    FROM foo.bar\r\n    WHERE col1 = 'val1';", value);
+            Xunit.Assert.Equal("DELETE\r\n    FROM [foo].[bar]\r\n    WHERE [col1] = 'val1';", value);
 
         }
     }

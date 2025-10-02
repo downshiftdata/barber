@@ -1,6 +1,6 @@
 namespace barber.CodeGen.Builders
 {
-    public class UpdateStatementBuilder : IStatementBuilder
+    public class UpdateStatementBuilder : StatementBuilderBase, IStatementBuilder
     {
         private const string Template = """
 UPDATE {schemaName}.{tableName}
@@ -12,25 +12,24 @@ UPDATE {schemaName}.{tableName}
 
         public string? Build(Models.StatementBuilderOptions options)
         {
-            // TODO: Currently very crude.
             var setList = string.Empty;
             var whereList = string.Empty;
             foreach (var p in options.Parameters)
             {
                 if (p.IsFilter)
                 {
-                    whereList += $" AND {p.Name} = '{p.Value}'";
+                    whereList += $" AND {FormatIdentifier(p.Name)} = {FormatValue(p.Value, p.DbType)}";
                 }
                 else
                 {
-                    setList += $"{p.Name} = '{p.Value}',";
+                    setList += $"{FormatIdentifier(p.Name)} = {FormatValue(p.Value, p.DbType)},";
                 }
             }
             setList = setList.TrimEnd(',');
-            whereList = whereList.Remove(0, 5);
+            if (whereList.Length > 5) whereList = whereList.Remove(0, 5); /* " AND " */
             var result = Template
-                .Replace("{schemaName}", options.SchemaName)
-                .Replace("{tableName}", options.TableName)
+                .Replace("{schemaName}", FormatIdentifier(options.SchemaName))
+                .Replace("{tableName}", FormatIdentifier(options.TableName))
                 .Replace("{setList}", setList)
                 .Replace("{whereList}", whereList);
             return result;

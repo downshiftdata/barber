@@ -23,7 +23,7 @@ namespace barber.CodeGen.Test
             var value = builder.Build(options);
 
             // Assert
-            Xunit.Assert.Equal("UPDATE foo.bar\r\n    SET col1 = 'val1'\r\n    WHERE col2 = 'val2';", value);
+            Xunit.Assert.Equal("UPDATE [foo].[bar]\r\n    SET [col1] = 'val1'\r\n    WHERE [col2] = 'val2';", value);
 
         }
     }

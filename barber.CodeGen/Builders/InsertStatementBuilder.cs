@@ -1,6 +1,6 @@
 namespace barber.CodeGen.Builders
 {
-    public class InsertStatementBuilder : IStatementBuilder
+    public class InsertStatementBuilder : StatementBuilderBase, IStatementBuilder
     {
         private const string Template = """
 INSERT INTO {schemaName}.{tableName} ({columnList})
@@ -11,19 +11,18 @@ INSERT INTO {schemaName}.{tableName} ({columnList})
 
         public string? Build(Models.StatementBuilderOptions options)
         {
-            // TODO: Currently very crude.
             var columnList = string.Empty;
             var valueList = string.Empty;
             foreach (var p in options.Parameters)
             {
-                columnList += $"{p.Name},";
-                valueList += $"'{p.Value}',";
+                columnList += $"{FormatIdentifier(p.Name)},";
+                valueList += $"{FormatValue(p.Value, p.DbType)},";
             }
             columnList = columnList.TrimEnd(',');
             valueList = valueList.TrimEnd(',');
             var result = Template
-                .Replace("{schemaName}", options.SchemaName)
-                .Replace("{tableName}", options.TableName)
+                .Replace("{schemaName}", FormatIdentifier(options.SchemaName))
+                .Replace("{tableName}", FormatIdentifier(options.TableName))
                 .Replace("{columnList}", columnList)
                 .Replace("{valueList}", valueList);
             return result;

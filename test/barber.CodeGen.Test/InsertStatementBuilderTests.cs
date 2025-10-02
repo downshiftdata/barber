@@ -22,7 +22,7 @@
             var value = builder.Build(options);
 
             // Assert
-            Xunit.Assert.Equal("INSERT INTO foo.bar (col1)\r\n    SELECT 'val1';", value);
+            Xunit.Assert.Equal("INSERT INTO [foo].[bar] ([col1])\r\n    SELECT 'val1';", value);
 
         }
     }
