@@ -5,8 +5,8 @@
 
 @inject NavigationManager Navigation;
 @inject CodeGen.Services.IStatementService _StatementService;
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 
 <PageTitle>Edit Statement</PageTitle>
 
@@ -85,8 +85,8 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        Databases = await _ReadRepository.SelectDatabaseList();
-        var response = await _ReadRepository.SelectStatementByKey(Key);
+        Databases = await _QueryService.SelectDatabaseList();
+        var response = await _QueryService.SelectStatementByKey(Key);
         Statement = Data.Models.StatementRequest.Create(response);
     }
 
@@ -106,7 +106,7 @@ else
                     break;
             }
             Statement.StatementText = _StatementService.Build(Statement);
-            var result = await _WriteRepository.UpdateStatement(Statement);
+            var result = await _CommandService.UpdateStatement(Statement);
             Navigation.NavigateTo("/statement/list");
         }
     }

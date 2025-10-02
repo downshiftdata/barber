@@ -1,6 +1,6 @@
 namespace barber.Data.Interfaces
 {
-    public interface IReadRepository
+    public interface IQueryService
     {
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Models.ListResponse>> SelectApprovedStatementList();
 

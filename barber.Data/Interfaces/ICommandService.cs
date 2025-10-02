@@ -1,6 +1,6 @@
 namespace barber.Data.Interfaces
 {
-    public interface IWriteRepository
+    public interface ICommandService
     {
         System.Threading.Tasks.Task<Data.Models.WriteResult> ApproveStatement(Data.Models.StatementRequest request);
 

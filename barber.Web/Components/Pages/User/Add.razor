@@ -2,8 +2,8 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Add User</PageTitle>
@@ -80,7 +80,7 @@ else
                 User.PasswordHash = _EncryptionService.OneWayEncrypt(Password);
             }
             User.EditByUserName = "default";
-            var result = await _WriteRepository.InsertUser(User);
+            var result = await _CommandService.InsertUser(User);
             Navigation.NavigateTo("/user/list");
         }
     }

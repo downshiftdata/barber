@@ -1,7 +1,7 @@
 @page "/statement/{Key:int}/history"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @rendermode InteractiveServer
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
 
 <PageTitle>Statement Revisions</PageTitle>
 
@@ -64,6 +64,6 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        _Revisions = await _ReadRepository.SelectStatementHistory(Key);
+        _Revisions = await _QueryService.SelectStatementHistory(Key);
     }
 }

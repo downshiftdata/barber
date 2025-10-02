@@ -1,7 +1,7 @@
 @page "/statement/list"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @rendermode InteractiveServer
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
 
 <PageTitle>Statements</PageTitle>
 
@@ -68,6 +68,6 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        _Statements = await _ReadRepository.SelectStatements();
+        _Statements = await _QueryService.SelectStatements();
     }
 }

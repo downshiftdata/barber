@@ -2,8 +2,8 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Approver)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 
 <PageTitle>Approve Statement</PageTitle>
 
@@ -60,7 +60,7 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        var response = await _ReadRepository.SelectStatementByKey(Key);
+        var response = await _QueryService.SelectStatementByKey(Key);
         Statement = Data.Models.StatementRequest.Create(response);
     }
 
@@ -69,7 +69,7 @@ else
         if (Statement != null)
         {
             Statement.ApproveByUserName = "default";
-            var result = await _WriteRepository.ApproveStatement(Statement);
+            var result = await _CommandService.ApproveStatement(Statement);
             Navigation.NavigateTo("/statement/list");
         }
     }

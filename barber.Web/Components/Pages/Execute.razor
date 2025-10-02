@@ -2,10 +2,10 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Executor)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation;
-@inject barber.Data.Interfaces.IExecuteRepository _ExecuteRepository;
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IExecuteService _ExecuteService;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 
 <PageTitle>Execute</PageTitle>
 
@@ -65,8 +65,8 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        Databases = await _ReadRepository.SelectDatabaseList();
-        Statements = await _ReadRepository.SelectApprovedStatementList();
+        Databases = await _QueryService.SelectDatabaseList();
+        Statements = await _QueryService.SelectApprovedStatementList();
         Execution = new Data.Models.ExecutionRequest();
     }
 
@@ -74,8 +74,8 @@ else
     {
         if (Execution != null)
         {
-            var statement = await _ReadRepository.SelectStatementByKey(Execution.StatementKey);
-            var database = await _ReadRepository.SelectDatabaseByKey(Execution.DatabaseKey);
+            var statement = await _QueryService.SelectStatementByKey(Execution.StatementKey);
+            var database = await _QueryService.SelectDatabaseByKey(Execution.DatabaseKey);
             if (statement.ApproveByUserName is null) throw new System.ArgumentNullException("ApproveByUserName");
             if (statement.ApproveDateTime is null) throw new System.ArgumentNullException("ApproveDateTime");
             if (statement.StatementText is null) throw new System.ArgumentNullException("StatementText");
@@ -83,10 +83,10 @@ else
             Execution.ExecuteDateTime = System.DateTime.UtcNow;
             var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
             var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
-            Result = _ExecuteRepository.ExecuteStatement(statement.StatementText, options);
+            Result = _ExecuteService.ExecuteStatement(statement.StatementText, options);
             Execution.ExecuteMs = (long)System.DateTime.UtcNow.Subtract(Execution.ExecuteDateTime).TotalMilliseconds;
             Execution.RowCount = Result.RowCount;
-            var writeResult = await _WriteRepository.InsertExecution(Execution);
+            var writeResult = await _CommandService.InsertExecution(Execution);
         }
     }
 }

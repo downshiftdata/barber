@@ -2,9 +2,9 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Editor)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject barber.Data.Interfaces.IExecuteRepository _ExecuteRepository;
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IExecuteService _ExecuteService;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Validate Statement</PageTitle>
@@ -80,7 +80,7 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        Statement = await _ReadRepository.SelectStatementByKey(Key);
+        Statement = await _QueryService.SelectStatementByKey(Key);
     }
 
     private async System.Threading.Tasks.Task Submit()
@@ -89,14 +89,14 @@ else
         {
             if (Statement.StatementText is not null)
             {
-                var database = await _ReadRepository.SelectDatabaseByKey(Statement.CheckDatabaseKey);
+                var database = await _QueryService.SelectDatabaseByKey(Statement.CheckDatabaseKey);
                 var password = string.IsNullOrWhiteSpace(database.PasswordHash) ? null : _EncryptionService.Decrypt(database.PasswordHash);
                 var options = new Data.Models.ConnectionOptions(database.ServerName, database.DatabaseName, database.UserName, password);
-                Result = _ExecuteRepository.ValidateStatement(Statement.StatementText, options);
+                Result = _ExecuteService.ValidateStatement(Statement.StatementText, options);
                 if (Result.IsSuccessful)
                 {
                     var request = Data.Models.StatementRequest.Create(Statement);
-                    await _WriteRepository.ValidateStatement(request);
+                    await _CommandService.ValidateStatement(request);
                 }
             }
         }

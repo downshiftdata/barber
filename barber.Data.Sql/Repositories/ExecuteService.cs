@@ -1,6 +1,6 @@
-namespace barber.Data.Sql.Repositories
+namespace barber.Data.Sql.Services
 {
-    public class ExecuteRepository : Data.Interfaces.IExecuteRepository
+    public class ExecuteService : Data.Interfaces.IExecuteService
     {
         private const string AdHocTemplate = "/* barber */\r\n{parseOnly}{statement}\r\nSELECT @@ROWCOUNT;";
 
@@ -12,7 +12,7 @@ namespace barber.Data.Sql.Repositories
 
         private const string ParseOnlyOn = "SET PARSEONLY ON;\r\n";
 
-        public ExecuteRepository() { }
+        public ExecuteService() { }
 
         public Data.Models.ExecuteResult ExecuteStatement(string statementText, Data.Models.ConnectionOptions options)
         {

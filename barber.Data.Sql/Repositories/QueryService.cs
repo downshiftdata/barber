@@ -1,8 +1,8 @@
-namespace barber.Data.Sql.Repositories
+namespace barber.Data.Sql.Services
 {
-    public class ReadRepository : SqlRepositoryBase, Data.Interfaces.IReadRepository
+    public class QueryService : SqlServiceBase, Data.Interfaces.IQueryService
     {
-        public ReadRepository(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
+        public QueryService(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
 
         public async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Data.Models.ListResponse>> SelectApprovedStatementList()
         {

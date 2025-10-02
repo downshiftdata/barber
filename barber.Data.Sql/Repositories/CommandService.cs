@@ -1,8 +1,8 @@
-namespace barber.Data.Sql.Repositories
+namespace barber.Data.Sql.Services
 {
-    public class WriteRepository : SqlRepositoryBase, Data.Interfaces.IWriteRepository
+    public class CommandService : SqlServiceBase, Data.Interfaces.ICommandService
     {
-        public WriteRepository(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
+        public CommandService(Models.ISqlContext sqlContext) : base(sqlContext, "barber") { }
 
         public async System.Threading.Tasks.Task<Data.Models.WriteResult> ApproveStatement(Data.Models.StatementRequest request)
         {
@@ -64,7 +64,7 @@ namespace barber.Data.Sql.Repositories
                 base.CreateEnumParameter("StatementType", request.StatementType),
                 base.CreateStringParameter("SchemaName", request.SchemaName),
                 base.CreateStringParameter("TableName", request.TableName),
-                base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
+                base.CreateStringParameter("StatementText", request.StatementText, SqlServiceBase.MaxStringLength),
                 base.CreateJsonParameter("StatementDetailJson", request.StatementDetailJson),
                 base.CreateKeyParameter("CheckDatabaseKey", request.CheckDatabaseKey)
             };
@@ -120,7 +120,7 @@ namespace barber.Data.Sql.Repositories
                 base.CreateEnumParameter("StatementType", request.StatementType),
                 base.CreateStringParameter("SchemaName", request.SchemaName),
                 base.CreateStringParameter("TableName", request.TableName),
-                base.CreateStringParameter("StatementText", request.StatementText, SqlRepositoryBase.MaxStringLength),
+                base.CreateStringParameter("StatementText", request.StatementText, SqlServiceBase.MaxStringLength),
                 base.CreateJsonParameter("StatementDetailJson", request.StatementDetailJson),
                 base.CreateKeyParameter("CheckDatabaseKey", request.CheckDatabaseKey)
             };

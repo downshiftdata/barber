@@ -7,19 +7,19 @@ namespace barber.Security.Services
     {
         private readonly IEncryptionService _EncryptionService;
         private readonly ILogger _Logger;
-        private readonly Data.Interfaces.IReadRepository _ReadRepository;
+        private readonly Data.Interfaces.IQueryService _QueryService;
 
-        public AuthenticationService(IEncryptionService encryptionService, Data.Interfaces.IReadRepository readRepository, ILogger<AuthenticationService> logger)
+        public AuthenticationService(IEncryptionService encryptionService, Data.Interfaces.IQueryService QueryService, ILogger<AuthenticationService> logger)
         {
             _EncryptionService = encryptionService;
-            _ReadRepository = readRepository;
+            _QueryService = QueryService;
             _Logger = logger;
         }
 
         public async System.Threading.Tasks.Task<bool> SignInAsync(Microsoft.AspNetCore.Http.HttpContext context, string userName, string password)
         {
             var passwordHash = _EncryptionService.OneWayEncrypt(password);
-            var user = await _ReadRepository.SelectUserByCredentials(userName, passwordHash);
+            var user = await _QueryService.SelectUserByCredentials(userName, passwordHash);
             if (user == null) return false;
             var claims = new System.Collections.Generic.List<System.Security.Claims.Claim>()
             {

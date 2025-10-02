@@ -2,8 +2,8 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = Security.Roles.Admin)]
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
-@inject barber.Data.Interfaces.IWriteRepository _WriteRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
+@inject barber.Data.Interfaces.ICommandService _CommandService;
 @inject barber.Security.Services.IEncryptionService _EncryptionService;
 
 <PageTitle>Edit Database</PageTitle>
@@ -78,7 +78,7 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        var response = await _ReadRepository.SelectDatabaseByKey(Key);
+        var response = await _QueryService.SelectDatabaseByKey(Key);
         Database = Data.Models.DatabaseRequest.Create(response);
     }
 
@@ -91,7 +91,7 @@ else
                 Database.PasswordHash = _EncryptionService.Encrypt(Password);
             }
             Database.EditByUserName = "default";
-            var result = await _WriteRepository.UpdateDatabase(Database);
+            var result = await _CommandService.UpdateDatabase(Database);
             Navigation.NavigateTo("/database/list");
         }
     }

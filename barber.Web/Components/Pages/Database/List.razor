@@ -1,7 +1,7 @@
 @page "/database/list"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @rendermode InteractiveServer
-@inject barber.Data.Interfaces.IReadRepository _ReadRepository;
+@inject barber.Data.Interfaces.IQueryService _QueryService;
 
 <PageTitle>Databases</PageTitle>
 
@@ -60,6 +60,6 @@ else
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        _Databases = await _ReadRepository.SelectDatabases();
+        _Databases = await _QueryService.SelectDatabases();
     }
 }

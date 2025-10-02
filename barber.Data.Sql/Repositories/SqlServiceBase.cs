@@ -2,9 +2,9 @@ using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using barber.Data.Extensions;
 
-namespace barber.Data.Sql.Repositories
+namespace barber.Data.Sql.Services
 {
-    public abstract class SqlRepositoryBase
+    public abstract class SqlServiceBase
     {
         public const int DefaultPrecision = 18;
 
@@ -18,7 +18,7 @@ namespace barber.Data.Sql.Repositories
 
         private readonly string _SchemaName;
 
-        protected SqlRepositoryBase(Models.ISqlContext context, string schemaName)
+        protected SqlServiceBase(Models.ISqlContext context, string schemaName)
         {
             _Context = context;
             _SchemaName = schemaName;
